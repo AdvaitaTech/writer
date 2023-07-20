@@ -4,17 +4,18 @@ import StarterKit from "@tiptap/starter-kit";
 
 interface EditorProps {
   content: string;
+  placeholder?: string;
 }
 
-const Editor = ({}: EditorProps) => {
+const Editor = ({content, placeholder}: EditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
       Placeholder.configure({
-        placeholder: "Share your story...",
+        placeholder: placeholder || 'Start writing...'
       }),
     ],
-    content: "Hello World",
+    content,
   });
 
   return (
