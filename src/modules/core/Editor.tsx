@@ -7,15 +7,20 @@ interface EditorProps {
   placeholder?: string;
 }
 
-const Editor = ({content, placeholder}: EditorProps) => {
+const Editor = ({ content, placeholder }: EditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
       Placeholder.configure({
-        placeholder: placeholder || 'Start writing...'
+        placeholder: placeholder || "Start writing...",
       }),
     ],
     content,
+    editorProps: {
+      attributes: {
+        class: "adv-content",
+      },
+    },
   });
 
   return (
