@@ -23,7 +23,7 @@ interface EditorProps {
 
 const Editor = ({ content, placeholder }: EditorProps) => {
   const [selectionType, setSelectionType] = useState<SelectionMenuType>(null);
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -56,7 +56,7 @@ const Editor = ({ content, placeholder }: EditorProps) => {
             return editor.isActive("paragraph");
           }}
           tippyOptions={{
-            appendTo: containerRef.current
+            appendTo: containerRef.current,
           }}
         >
           <button
@@ -114,11 +114,13 @@ const Editor = ({ content, placeholder }: EditorProps) => {
           </button>
         </BubbleMenu>
       )}
-      {editor && <SelectionMenu
-        editor={editor}
-        type={selectionType}
-        setSelectionType={setSelectionType}
-      />}
+      {editor && (
+        <SelectionMenu
+          editor={editor}
+          type={selectionType}
+          setSelectionType={setSelectionType}
+        />
+      )}
       <EditorContent editor={editor} className="editor" />
     </div>
   );
