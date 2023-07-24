@@ -16,7 +16,7 @@ describe("Editor Component", () => {
     cy.contains("Hello World");
   });
 
-  describe.only("Nodes", () => {
+  describe("Nodes", () => {
     it("should set paragraph content", () => {
       showEditor("Hello World");
       cy.get(".editor p").clear();
@@ -89,13 +89,13 @@ describe("Editor Component", () => {
     });
   });
 
-  describe("Marks", () => {
+  describe.only("Marks", () => {
     it("should show the floating menu for marks", () => {
       showEditor("Hello World");
       cy.get(".adv-content").then((field) => {
         createTextSelection(field.get(0), 6, 9);
       });
-      cy.get(".editor .bubble-menu");
+      cy.get(".bubble-menu");
     });
 
     it("should only show the bubble menu on paragraph nodes", () => {
@@ -110,93 +110,99 @@ describe("Editor Component", () => {
       cy.get(".adv-content ul li").then((field) => {
         createNodeSelection(field.get(0));
       });
-      cy.get(".bubble-menu").should("not.exist");
+      cy.get(".bubble-menu").should("exist");
       cy.get(".adv-content").then((field) => {
         createTextSelection(field.get(0), 2, 4, 2, 2);
       });
       cy.get(".bubble-menu").should("not.exist");
-      cy.get(".adv-content").then((field) => {
-        createTextSelection(field.get(0), 2, 4, 3, 3);
+      cy.get(".adv-content pre").then((field) => {
+        createTextSelection(field.get(0), 2, 4, 0, 0);
       });
       cy.get(".bubble-menu").should("not.exist");
     });
 
     it("should toggle bold mark", () => {
       showEditor("Hello World");
-      cy.get("adv-content").then((field) =>
+      cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
-      cy.get("bubble-menu");
-      cy.get('[data-test-id]="mark-bold"')
+      cy.get(".bubble-menu");
+      cy.get('[data-test-id="mark-bold"]')
         .click()
         .should("have.class", "active");
-      cy.get("adv-content p").contains("Hello <strong>Wor</strong>ld");
+      cy.get(".adv-content p").then((el) => {
+        const text = el.html();
+        expect(text).to.eq("Hello <strong>Wor</strong>ld");
+      });
     });
 
     it("should toggle italic mark", () => {
       showEditor("Hello World");
-      cy.get("adv-content").then((field) =>
+      cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
-      cy.get("bubble-menu");
-      cy.get('[data-test-id]="mark-italic"')
+      cy.get(".bubble-menu");
+      cy.get('[data-test-id="mark-italic"]')
         .click()
         .should("have.class", "active");
-      cy.get("adv-content p").contains("Hello <em>Wor</em>ld");
+      cy.get(".adv-content p").then((el) =>
+        expect(el.html()).to.eq("Hello <em>Wor</em>ld")
+      );
     });
 
     it("should toggle underline mark", () => {
       showEditor("Hello World");
-      cy.get("adv-content").then((field) =>
+      cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
-      cy.get("bubble-menu");
-      cy.get('[data-test-id]="mark-underline"')
+      cy.get(".bubble-menu");
+      cy.get('[data-test-id="mark-underline"]')
         .click()
         .should("have.class", "active");
-      cy.get("adv-content p").contains("Hello <em>Wor</em>ld");
+      cy.get(".adv-content p").then((el) =>
+        expect(el.html()).to.eq("Hello <u>Wor</u>ld")
+      );
     });
 
     it("should toggle strike mark", () => {
       showEditor("Hello World");
-      cy.get("adv-content").then((field) =>
+      cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
-      cy.get("bubble-menu");
-      cy.get('[data-test-id]="mark-strike"')
+      cy.get(".bubble-menu");
+      cy.get('[data-test-id="mark-strike"]')
         .click()
         .should("have.class", "active");
-      cy.get("adv-content p").contains("Hello <s>Wor</s>ld");
+      cy.get(".adv-content p").then(el => expect(el.html()).to.eq("Hello <s>Wor</s>ld"));
     });
 
     it("should insert a link", () => {
       showEditor("Hello World");
-      cy.get("adv-content").then((field) =>
+      cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
-      cy.get("bubble-menu");
-      cy.get('[data-test-id]="mark-link"').click();
+      cy.get(".bubble-menu");
+      cy.get('[data-test-id="mark-link"]').click();
       cy.get(".insert-link-box");
-      cy.get('[data-test-id]="insert-link-value"')
+      cy.get('[data-test-id="insert-link-value"]')
         .type("http://google.com")
         .type("{enter}");
-      cy.get("adv-content p").get('a[href="http://google.com"]');
+      cy.get(".adv-content p").get('a[href="http://google.com"]');
     });
 
     it("should change highlight bubble icons if selection changes", () => {
       showEditor("Hello World");
-      cy.get("adv-content").then((field) =>
+      cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
-      cy.get("bubble-menu");
-      cy.get('[data-test-id]="mark-strike"')
+      cy.get(".bubble-menu");
+      cy.get('[data-test-id="mark-strike"]')
         .click()
         .should("have.class", "active");
-      cy.get("adv-content").then((field) =>
+      cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 0, 2)
       );
-      cy.get('[data-test-id]="mark-strike"')
-        .click()
+      cy.get('[data-test-id="mark-strike"]')
         .should("not.have.class", "active");
     });
   });
