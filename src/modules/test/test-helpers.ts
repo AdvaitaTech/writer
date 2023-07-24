@@ -19,10 +19,7 @@ export const createTextSelection = (
   field.focus();
 };
 
-export const createNodeSelection = (
-  field: HTMLElement,
-
-) => {
+export const createNodeSelection = (field: HTMLElement) => {
   const sel = window.getSelection();
   const range = window.document.createRange();
   if (!sel || !field) {
@@ -32,4 +29,4 @@ export const createNodeSelection = (
   sel.removeAllRanges();
   sel.addRange(range);
   field.focus();
-}
+};

@@ -16,7 +16,7 @@ describe("Editor Component", () => {
     cy.contains("Hello World");
   });
 
-  describe("Nodes", () => {
+  describe.only("Nodes", () => {
     it("should set paragraph content", () => {
       showEditor("Hello World");
       cy.get(".editor p").clear();
@@ -40,14 +40,14 @@ describe("Editor Component", () => {
       const url = "https://www.w3schools.com/html/pic_trulli.jpg";
       showEditor(`<img src='${url}'>`);
       cy.get(".editor span.image-container");
-      cy.get(".editor span img[src='#{url}']");
+      cy.get(`.editor span img[src='${url}']`);
     });
 
     it("should render image nodes within paragraph tags", () => {
       const url = "https://www.w3schools.com/html/pic_trulli.jpg";
       showEditor(`<p><img src='${url}'></p>`);
       cy.get(".editor span.image-container");
-      cy.get(".editor span img[src='#{url}']");
+      cy.get(`.editor span img[src='${url}']`);
     });
 
     it("should render block quotes", () => {
@@ -89,7 +89,7 @@ describe("Editor Component", () => {
     });
   });
 
-  describe.only("Marks", () => {
+  describe("Marks", () => {
     it("should show the floating menu for marks", () => {
       showEditor("Hello World");
       cy.get(".adv-content").then((field) => {
