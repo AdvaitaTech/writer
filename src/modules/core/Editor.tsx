@@ -15,6 +15,9 @@ import { StrikeIcon } from "./assets/icons/StrikeIcon";
 import { LinkIcon } from "./assets/icons/LinkIcon";
 import SelectionMenu, { SelectionMenuType } from "./menus/SelectionMenu";
 import { useRef, useState } from "react";
+import CommandsPlugin from "./nodes/CommandsPlugin";
+import ImagePlaceholderNode from "./nodes/ImagePlaceholderNode";
+import VideoPlaceholderNode from "./nodes/VideoPlaceholderNode";
 
 interface EditorProps {
   content: string;
@@ -36,6 +39,9 @@ const Editor = ({ content, placeholder }: EditorProps) => {
       CalloutNode,
       ImageNode,
       YoutubeNode,
+      CommandsPlugin,
+      ImagePlaceholderNode,
+      VideoPlaceholderNode
     ],
     content,
     editorProps: {

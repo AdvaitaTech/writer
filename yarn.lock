@@ -775,6 +775,11 @@
     "@tiptap/extension-strike" "^2.0.4"
     "@tiptap/extension-text" "^2.0.4"
 
+"@tiptap/suggestion@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@tiptap/suggestion/-/suggestion-2.0.4.tgz#08e6c47a723200d02238d845cb09684c481f0066"
+  integrity sha512-C5LGGjH8VFET34V7vKkqlwpSzrPl+7oAcj9h+P3jvJQ076iYpmpnMtz6dNLSFGKpHp5mtyl4RoJzh7lTvlfyiA==
+
 "@types/cypress@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@types/cypress/-/cypress-1.1.3.tgz#0a700c040d53e9e12b5af98e41d4a88c39f39b6a"

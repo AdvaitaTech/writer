@@ -89,7 +89,7 @@ describe("Editor Component", () => {
     });
   });
 
-  describe.only("Marks", () => {
+  describe("Marks", () => {
     it("should show the floating menu for marks", () => {
       showEditor("Hello World");
       cy.get(".adv-content").then((field) => {
@@ -210,23 +210,26 @@ describe("Editor Component", () => {
   describe("Node Creation", () => {
     it("should show the insertion menu on / character", () => {
       showEditor("Hello World");
-      cy.get("adv-content").type("{enter}/");
+      cy.get(".adv-content").type("{enter}/");
       cy.get(".insert-menu");
     });
 
     it("should insert 3 types of headings", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/");
-      cy.get('.insert-menu [data-test-id]="insert-heading1"')
+      cy.get('.insert-menu [data-test-id="insert-heading1"]')
         .click()
-        .type("Head");
+      cy.get('.adv-content')
+        .type("Head{enter}/");
       cy.get(".adv-content h1").contains("Head");
-      cy.get('.insert-menu [data-test-id]="insert-heading2"')
+      cy.get('.insert-menu [data-test-id="insert-heading2"]')
         .click()
-        .type("Head");
+      cy.get('.adv-content')
+        .type("Head{enter}/");
       cy.get(".adv-content h2").contains("Head");
-      cy.get('.insert-menu [data-test-id]="insert-heading3"')
+      cy.get('.insert-menu [data-test-id="insert-heading3"]')
         .click()
+      cy.get('.adv-content')
         .type("Head");
       cy.get(".adv-content h3").contains("Head");
     });
@@ -234,7 +237,8 @@ describe("Editor Component", () => {
     it("should insert a blockquote", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/");
-      cy.get('.adv-content [data-test-id]="insert-quote"').click().type("Hi");
+      cy.get('.insert-menu [data-test-id="insert-quote"]').click()
+      cy.get('.adv-content').type("Hi");
       cy.get(".adv-content blockquote").contains("Hi");
     });
 
@@ -243,32 +247,32 @@ describe("Editor Component", () => {
         "https://images.vexels.com/media/users/3/136995/isolated/lists/799cbe2494ac10761303868f937c68d0-tiny-recycle-arrow.png";
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/");
-      cy.get('.adv-content [data-test-id]="insert-image"').click();
-      cy.get(".adv-content image-placeholder input").type(url).type("{enter}");
-      cy.get(`.adv-content .image-placeholder img[src="${url}"]`);
+      cy.get('.insert-menu [data-test-id="insert-image"]').click();
+      cy.get(".adv-content image-placeholder input").type(`${url}{enter}`);
+      cy.get(`.adv-content .image-container img[src="${url}"]`);
     });
 
     it("should insert a youtube embed via placeholder", () => {
       const url = "https://www.youtube.com/watch?v=tD8KUyQPmmE";
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/");
-      cy.get('.adv-content [data-test-id]="insert-video"').click();
-      cy.get(".adv-content video-placeholder input").type(url).type("{enter}");
-      cy.get(`.adv-content .video-placeholder div[data-youtube-video] iframe`);
+      cy.get('.insert-menu [data-test-id="insert-video"]').click();
+      cy.get(".adv-content video-placeholder input").type(`${url}{enter}`);
+      cy.get(`.adv-content div[data-youtube-video] iframe`);
     });
 
     it("should cycle through node types via arrow keys", () => {
       showEditor("Hello World");
-      cy.get(".adv-content").type("{enter}/").type("{downArrow}{downArrow}");
+      cy.get(".adv-content").type("{enter}/").type("{downArrow}");
       cy.get(
-        '.adv-content .insert-menu [data-test-id]="insert-heading1"'
+        '.insert-menu [data-test-id="insert-heading1"]'
       ).should("have.class", "active");
       cy.get(".adv-content").type("{downArrow}");
       cy.get(
-        '.adv-content .insert-menu [data-test-id]="insert-heading2"'
+        '.insert-menu [data-test-id="insert-heading2"]'
       ).should("have.class", "active");
       cy.get(".adv-content").type("{upArrow}{upArrow}");
-      cy.get('.adv-content .insert-menu [data-test-id]="insert-video"').should(
+      cy.get('.insert-menu [data-test-id="insert-video"]').should(
         "have.class",
         "active"
       );

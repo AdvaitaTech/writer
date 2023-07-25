@@ -5,6 +5,7 @@ import {
   nodePasteRule,
   Command,
   InputRule,
+  ChainedCommands,
 } from "@tiptap/core";
 import {
   NodeViewContent,
@@ -21,7 +22,7 @@ type ResizerCallback = (arg0: {
 declare module "@tiptap/core" {
   interface Commands {
     imageNode: {
-      setImage: (options: { src: string }) => Command;
+      setImage: (options: { src: string }) => ChainedCommands;
     };
   }
 }
