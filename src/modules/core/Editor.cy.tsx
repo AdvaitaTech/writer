@@ -92,6 +92,7 @@ describe("Editor Component", () => {
   describe("Marks", () => {
     it("should show the floating menu for marks", () => {
       showEditor("Hello World");
+      cy.get(".bubble-menu").should("not.exist");
       cy.get(".adv-content").then((field) => {
         createTextSelection(field.get(0), 6, 9);
       });
@@ -173,7 +174,9 @@ describe("Editor Component", () => {
       cy.get('[data-test-id="mark-strike"]')
         .click()
         .should("have.class", "active");
-      cy.get(".adv-content p").then(el => expect(el.html()).to.eq("Hello <s>Wor</s>ld"));
+      cy.get(".adv-content p").then((el) =>
+        expect(el.html()).to.eq("Hello <s>Wor</s>ld")
+      );
     });
 
     it("should insert a link", () => {
@@ -202,8 +205,7 @@ describe("Editor Component", () => {
       cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 0, 2)
       );
-      cy.get('[data-test-id="mark-strike"]')
-        .should("not.have.class", "active");
+      cy.get('[data-test-id="mark-strike"]').should("not.have.class", "active");
     });
   });
 
@@ -217,28 +219,22 @@ describe("Editor Component", () => {
     it("should insert 3 types of headings", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/");
-      cy.get('.insert-menu [data-test-id="insert-heading1"]')
-        .click()
-      cy.get('.adv-content')
-        .type("Head{enter}/");
+      cy.get('.insert-menu [data-test-id="insert-heading1"]').click();
+      cy.get(".adv-content").type("Head{enter}/");
       cy.get(".adv-content h1").contains("Head");
-      cy.get('.insert-menu [data-test-id="insert-heading2"]')
-        .click()
-      cy.get('.adv-content')
-        .type("Head{enter}/");
+      cy.get('.insert-menu [data-test-id="insert-heading2"]').click();
+      cy.get(".adv-content").type("Head{enter}/");
       cy.get(".adv-content h2").contains("Head");
-      cy.get('.insert-menu [data-test-id="insert-heading3"]')
-        .click()
-      cy.get('.adv-content')
-        .type("Head");
+      cy.get('.insert-menu [data-test-id="insert-heading3"]').click();
+      cy.get(".adv-content").type("Head");
       cy.get(".adv-content h3").contains("Head");
     });
 
     it("should insert a blockquote", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/");
-      cy.get('.insert-menu [data-test-id="insert-quote"]').click()
-      cy.get('.adv-content').type("Hi");
+      cy.get('.insert-menu [data-test-id="insert-quote"]').click();
+      cy.get(".adv-content").type("Hi");
       cy.get(".adv-content blockquote").contains("Hi");
     });
 
@@ -264,13 +260,15 @@ describe("Editor Component", () => {
     it("should cycle through node types via arrow keys", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/").type("{downArrow}");
-      cy.get(
-        '.insert-menu [data-test-id="insert-heading1"]'
-      ).should("have.class", "active");
+      cy.get('.insert-menu [data-test-id="insert-heading1"]').should(
+        "have.class",
+        "active"
+      );
       cy.get(".adv-content").type("{downArrow}");
-      cy.get(
-        '.insert-menu [data-test-id="insert-heading2"]'
-      ).should("have.class", "active");
+      cy.get('.insert-menu [data-test-id="insert-heading2"]').should(
+        "have.class",
+        "active"
+      );
       cy.get(".adv-content").type("{upArrow}{upArrow}");
       cy.get('.insert-menu [data-test-id="insert-video"]').should(
         "have.class",

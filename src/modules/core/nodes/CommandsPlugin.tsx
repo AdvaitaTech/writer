@@ -96,7 +96,7 @@ interface CommandProps {
 }
 
 const CommandsPlugin = Extension.create({
-  name: "commands",
+  name: "insertMenu",
   addProseMirrorPlugins() {
     return [
       Suggestion<CommandProps>({

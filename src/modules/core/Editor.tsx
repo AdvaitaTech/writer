@@ -18,9 +18,10 @@ import { useRef, useState } from "react";
 import CommandsPlugin from "./nodes/CommandsPlugin";
 import ImagePlaceholderNode from "./nodes/ImagePlaceholderNode";
 import VideoPlaceholderNode from "./nodes/VideoPlaceholderNode";
+import { TextSelection } from "@tiptap/pm/state";
 
 interface EditorProps {
-  content: string;
+  content?: string;
   placeholder?: string;
 }
 
@@ -35,13 +36,12 @@ const Editor = ({ content, placeholder }: EditorProps) => {
       }),
       Underline,
       Link,
-      Blockquote,
       CalloutNode,
       ImageNode,
       YoutubeNode,
       CommandsPlugin,
       ImagePlaceholderNode,
-      VideoPlaceholderNode
+      VideoPlaceholderNode,
     ],
     content,
     editorProps: {
@@ -52,13 +52,37 @@ const Editor = ({ content, placeholder }: EditorProps) => {
   });
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className="adv-editor">
       {editor && containerRef.current && (
         <BubbleMenu
           pluginKey="bubbleMenu"
           editor={editor}
           className="bubble-menu"
-          shouldShow={({ editor }) => {
+          shouldShow={({ editor, view, state, from, to }) => {
+            const { doc, selection } = state;
+            const { empty } = selection;
+            function isTextSelection(value: unknown): value is TextSelection {
+              return value instanceof TextSelection;
+            }
+
+            // Sometime check for `empty` is not enough.
+            // Doubleclick an empty paragraph returns a node size of 2.
+            // So we check also for an empty text size.
+            const isEmptyTextBlock =
+              !doc.textBetween(from, to).length &&
+              isTextSelection(state.selection);
+
+            // When clicking on a element inside the bubble menu the editor "blur" event
+            // is called and the bubble menu item is focussed. In this case we should
+            // consider the menu as part of the editor and keep showing the menu
+            const isChildOfMenu = view.dom.contains(document.activeElement);
+
+            const hasEditorFocus = view.hasFocus() || isChildOfMenu;
+
+            if (!hasEditorFocus || empty || isEmptyTextBlock) {
+              return false;
+            }
+
             return editor.isActive("paragraph");
           }}
           tippyOptions={{
