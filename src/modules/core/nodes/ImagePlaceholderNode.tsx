@@ -34,10 +34,11 @@ const ImagePlaceholderComponent = ({
     <NodeViewWrapper>
       <image-placeholder>
         <ImageIcon />
-        Upload an image
         <input
           ref={inputRef}
           type="text"
+          autoFocus
+          placeholder="Enter image url"
           onKeyDown={(e) => {
             if (e.key === "Enter") handleFileInput(e);
           }}

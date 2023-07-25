@@ -10,7 +10,7 @@ body {
   --adv-secondary: #3a5a40;
   --adv-tertiary: #a3b18aff;
   --adv-light: #dad7cdff;
-  --adv-font: 'Space Mono', monospace;
+  --adv-font: "Space Mono", monospace;
 
   /* CSS HEX */
   --timberwolf: #dad7cdff;
@@ -115,7 +115,7 @@ body {
       rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
 
     button {
-    font-family: var(--adv-font);
+      font-family: var(--adv-font);
       font-size: 15px;
       border: none;
       background: transparent;
@@ -139,5 +139,127 @@ body {
     float: left;
     height: 0;
     pointer-events: none;
+  }
+
+  image-placeholder {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-family: Jost;
+    background: var(--adv-light);
+    cursor: pointer;
+
+    i {
+      font-size: 20px;
+      margin-right: 10px;
+      color: var(--adv-primary);
+    }
+
+    input {
+      background: transparent;
+      border: 0;
+      outline: 0;
+      color: var(--adv-primary);
+      flex: 1;
+    }
+  }
+
+  .image-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .image-container {
+      max-width: 100%;
+      position: relative;
+
+      img {
+        width: 100%;
+      }
+
+      .caption {
+        display: flex;
+        justify-content: center;
+        height: 20px;
+        font-size: 12px;
+        color: var(--bs-gray-600);
+
+        span {
+          min-width: 10px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+
+      .resizer {
+        width: 6px;
+        height: 50px;
+        border-radius: 10px;
+        background: black;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translate(-50%, -50%);
+        border: 1px solid white;
+        cursor: ew-resize;
+      }
+    }
+  }
+
+  video-placeholder {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-family: Jost;
+    background: var(--adv-light);
+    cursor: pointer;
+    flex-direction: column;
+    color: var(--adv-primary);
+    justify-content: center;
+
+    .heading-row {
+      display: flex;
+      font-size: 16px;
+
+      i {
+        font-size: 20px;
+        margin-right: 10px;
+      }
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid var(--bs-gray-800);
+      color: var(--adv-primary);
+      flex: 1;
+    }
+  }
+
+  div[data-youtube-video] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  blockquote {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 35px;
+    letter-spacing: -0.17px;
+    color: var(--adv-primary);
+    border-left: 1px solid var(--adv-primary);
+    // color: #fb6855;
+
+    // border-left: 1px solid #fb6855;
+    padding-left: 33px;
+    margin-bottom: 25px;
   }
 }

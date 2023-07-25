@@ -1,6 +1,7 @@
 import React, { DetailedHTMLProps, HTMLAttributes, useRef } from "react";
 import { Node, NodeViewRendererProps, mergeAttributes } from "@tiptap/core";
 import { NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
+import { CameraIcon } from "../assets/icons/CameraIcon";
 
 declare global {
   namespace JSX {
@@ -24,12 +25,11 @@ const VideoPlaceholderComponent = ({
     <NodeViewWrapper>
       <video-placeholder ref={videoRef}>
         <div className="heading-row">
-          <i className="bi bi-camera-video" />
-          Paste a Youtube url
-        </div>
+          <CameraIcon />
         <input
           data-test-id="youtube-url"
           autoFocus
+          placeholder="Enter a youtube url"
           onKeyDown={(e) => {
             const url = e.currentTarget.value;
             if (e.key === "Enter") {
@@ -45,6 +45,7 @@ const VideoPlaceholderComponent = ({
             }
           }}
         />
+        </div>
       </video-placeholder>
     </NodeViewWrapper>
   );
