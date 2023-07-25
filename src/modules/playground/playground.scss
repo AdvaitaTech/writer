@@ -1,25 +1,143 @@
-html, body {
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+html,
+body {
   margin: 0;
   padding: 0;
+  font-family: "Space Mono", monospace;
+
+  --adv-primary: #344e41;
+  --adv-secondary: #3a5a40;
+  --adv-tertiary: #a3b18aff;
+  --adv-light: #dad7cdff;
+  --adv-font: 'Space Mono', monospace;
+
+  /* CSS HEX */
+  --timberwolf: #dad7cdff;
+  --sage: #a3b18aff;
+  --fern-green: #588157ff;
+  --hunter-green: #3a5a40ff;
+  --brunswick-green: #344e41ff;
+
+  /* CSS HSL */
+  --timberwolf: hsla(46, 15%, 83%, 1);
+  --sage: hsla(82, 20%, 62%, 1);
+  --fern-green: hsla(119, 19%, 42%, 1);
+  --hunter-green: hsla(131, 22%, 29%, 1);
+  --brunswick-green: hsla(150, 20%, 25%, 1);
+
+  letter-spacing: -0.5px;
+  line-height: 20px;
+  font-size: 14px;
 }
 
 * {
   box-sizing: border-box;
 }
 
-.play-editor {
+.adv-editor {
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   background: gray;
-  padding: 50px 0;
+  padding: 0 50px;
   align-items: flex-start;
 
   .editor {
     width: 80%;
-    padding: 20px;
-    min-height: 100%;
+    padding: 0 20px;
     background: white;
+    min-height: 100%;
+    display: flex;
+  }
+
+  .bubble-menu {
+    display: flex;
+    border: 1px solid black;
+    padding: 5px;
+    // visibility: hidden;
+    background: white;
+    width: auto;
+    border-radius: 5px;
+    box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+      rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+
+    button {
+      border: none;
+      background: transparent;
+
+      &.active {
+        i {
+          color: var(--adv-primary);
+        }
+      }
+    }
+
+    i {
+      padding: 0px 8px;
+      cursor: pointer;
+      color: var(--adv-tertiary);
+
+      &.active {
+        color: var(--adv-primary);
+      }
+    }
+  }
+
+  .insert-link-box {
+    font-family: var(--adv-font);
+    width: 300px;
+    flex-direction: column;
+    display: flex;
+    padding: 5px;
+    background: white;
+    border-radius: 5px;
+
+    input {
+      font-size: 14px;
+      color: var(--adv-primary);
+      border: 0;
+      outline: none;
+      box-shadow: none !important;
+    }
+  }
+
+  .insert-menu {
+    flex-direction: column;
+    display: flex;
+    border: 1px solid black;
+    // visibility: hidden;
+    background: white;
+    width: 200px;
+    border-radius: 5px;
+    box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+      rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+
+    button {
+    font-family: var(--adv-font);
+      font-size: 15px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+
+      &.active {
+        color: var(--adv-primary);
+      }
+    }
+  }
+}
+
+.adv-editor .adv-content {
+  flex: 1;
+  outline: none;
+  height: 100%;
+
+  p.is-editor-empty:first-child::before {
+    color: var(--adv-tertiary);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
   }
 }

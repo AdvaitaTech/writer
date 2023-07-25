@@ -186,11 +186,15 @@ describe("Editor Component", () => {
       );
       cy.get(".bubble-menu");
       cy.get('[data-test-id="mark-link"]').click();
-      cy.get(".insert-link-box");
-      cy.get('[data-test-id="insert-link-value"]')
+      cy.get(".bubble-menu .insert-link-box");
+      cy.get('.bubble-menu [data-test-id="insert-link-value"]')
         .type("http://google.com")
         .type("{enter}");
       cy.get(".adv-content p").get('a[href="http://google.com"]');
+      cy.get(".adv-content").then((field) =>
+        createTextSelection(field.get(0), 2, 4)
+      );
+      cy.get('.bubble-menu [data-test-id="mark-link"]');
     });
 
     it("should change highlight bubble icons if selection changes", () => {
