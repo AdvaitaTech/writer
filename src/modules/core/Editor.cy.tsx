@@ -261,6 +261,24 @@ describe("Editor Component", () => {
       cy.get(`.adv-content div[data-youtube-video] iframe`);
     });
 
+    it.only("should insert a bulletted list", () => {
+      showEditor("Hello World");
+      cy.get(".adv-content").type("{enter}/bullet{enter}").type("List Item 1");
+      cy.get(".adv-content ul li").contains("List Item 1");
+    });
+
+    it.only("should insert a numbered list", () => {
+      showEditor("Hello World");
+      cy.get(".adv-content").type("{enter}/number{enter}").type("List Item 1");
+      cy.get(".adv-content ol li").contains("List Item 1");
+    });
+
+    it.only("should insert a callout", () => {
+      showEditor("Hello World");
+      cy.get(".adv-content").type("{enter}/call{enter}").type("List Item 1");
+      cy.get(".adv-content .callout span").contains("List Item 1");
+    });
+
     it("should cycle through node types via arrow keys", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/").type("{downArrow}");

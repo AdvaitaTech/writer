@@ -1,5 +1,13 @@
 import { Node, mergeAttributes } from "@tiptap/core";
-import { RawCommands } from "@tiptap/react";
+import { CommandProps } from "@tiptap/react";
+
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    callout: {
+      setCallout: () => ReturnType;
+    };
+  }
+}
 
 export const CalloutNode = Node.create({
   name: "callout",
@@ -30,7 +38,6 @@ export const CalloutNode = Node.create({
         getAttrs: (node: string | HTMLElement) => {
           const isCallout =
             typeof node !== "string" && node.classList.contains("callout");
-            console.log('isCallout', isCallout, node.classList)
           return isCallout ? {} : false;
         },
       },
@@ -38,11 +45,11 @@ export const CalloutNode = Node.create({
   },
   addCommands: () => {
     return {
-      setMailwall:
+      setCallout:
         () =>
-        ({ commands }: { commands: RawCommands }) => {
-          return commands.setNode("callout");
+        ({ commands }: CommandProps) => {
+          return commands.insertContent({ type: "callout" });
         },
-    } as Partial<RawCommands>;
+    };
   },
 });

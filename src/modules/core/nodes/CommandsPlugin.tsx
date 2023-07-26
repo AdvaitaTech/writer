@@ -176,6 +176,56 @@ const CommandsPlugin = Extension.create({
                     .run();
                 },
               },
+{
+                title: "Bullet List",
+                attrs: {
+                  "data-test-id": "insert-bullet-list",
+                },
+                command: ({ editor, range }) => {
+                  const selection = editor.view.state.selection;
+                  const from = selection.$from.posAtIndex(0);
+                  const to = selection.$from.posAtIndex(1);
+                  editor
+                    .chain()
+                    .focus()
+                    .deleteRange({ from, to })
+                    .toggleBulletList()
+                    .run();
+                },
+              },{
+                title: "Numbered List",
+                attrs: {
+                  "data-test-id": "insert-ordered-list",
+                },
+                command: ({ editor, range }) => {
+                  const selection = editor.view.state.selection;
+                  const from = selection.$from.posAtIndex(0);
+                  const to = selection.$from.posAtIndex(1);
+                  editor
+                    .chain()
+                    .focus()
+                    .deleteRange({ from, to })
+                    .toggleOrderedList()
+                    .run();
+                },
+              },
+              {
+                title: "Callout",
+                attrs: {
+                  "data-test-id": "insert-callout",
+                },
+                command: ({ editor, range }) => {
+                  const selection = editor.view.state.selection;
+                  const from = selection.$from.posAtIndex(0);
+                  const to = selection.$from.posAtIndex(1);
+                  editor
+                    .chain()
+                    .focus()
+                    .deleteRange({ from, to })
+                    .setCallout()
+                    .run();
+                },
+              },
               {
                 title: "Image",
                 attrs: {
