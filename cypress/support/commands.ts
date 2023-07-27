@@ -35,3 +35,20 @@
 //     }
 //   }
 // }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      pasteImage(element: HTMLElement, payload: File): Chainable<void>;
+    }
+  }
+}
+
+Cypress.Commands.add("pasteImage", (element, payload) => {
+  const dt = new DataTransfer();
+  dt.items.add(payload);
+  const clipEvent = new ClipboardEvent("paste", { bubbles: true, cancelable: true, clipboardData: dt });
+  element.dispatchEvent(clipEvent);
+});
+
+export {};

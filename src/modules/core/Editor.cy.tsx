@@ -250,11 +250,27 @@ describe("Editor Component", () => {
       cy.get('.insert-menu [data-test-id="insert-image"]').click();
       cy.get(".adv-content image-placeholder input").type(`${url}{enter}`);
       cy.get(".adv-content .image-node .caption span").then((el) => {
-        // Without base css el is not visible, so doing a testing hack 
-        el.get(0).appendChild(document.createTextNode('Caption for text'))
-      })
+        // Without base css el is not visible, so doing a testing hack
+        el.get(0).appendChild(document.createTextNode("Caption for text"));
+      });
       cy.get(`.adv-content .image-container img[src="${url}"]`);
-      cy.get(`.adv-content .image-container span`).contains('Caption for text');
+      cy.get(`.adv-content .image-container span`).contains("Caption for text");
+    });
+
+    it.skip("should paste an image from clipboard as an image node", () => {
+      const svgText = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII'
+      showEditor("Hello World");
+      cy.get(".adv-content").type("{enter}");
+      cy.get(".adv-content").then((el) =>
+        cy.pasteImage(el.get(0), new File([svgText], "ico.png"))
+      );
+      cy.get(".adv-content .image-node .caption span").then((el) => {
+        // Without base css el is not visible, so doing a testing hack
+        el.get(0).appendChild(document.createTextNode("Caption for text"));
+      });
+      cy.get(`.adv-content .image-container img`);
+      cy.get(`.adv-content .image-container span`).contains("Caption for text");
+
     });
 
     it("should insert a youtube embed via placeholder", () => {
