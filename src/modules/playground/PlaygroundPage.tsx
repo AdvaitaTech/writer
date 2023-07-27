@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./playground.scss";
 import Editor from "modules/core/Editor";
+import 'modules/core/ui/base.scss';
 
 const App = () => {
   return (
