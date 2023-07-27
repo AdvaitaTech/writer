@@ -266,4 +266,13 @@
     font-family: var(--adv-font);
     font-size: 20px;
   }
+
+  code {
+    font-family: 'Space Mono', monospace;
+    background: var(--adv-light);
+    color: var(--adv-primary);
+    padding: 20px;
+    width: 100%;
+    display: block;
+  }
 }
