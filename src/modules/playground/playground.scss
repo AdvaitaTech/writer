@@ -184,13 +184,19 @@ body {
         justify-content: center;
         height: 20px;
         font-size: 12px;
-        color: var(--bs-gray-600);
 
         span {
+          color: var(--adv-tertiary);
+          border: 0;
+          outline: 0;
           min-width: 10px;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
+
+          &:empty:before {
+            content: 'Caption here...'
+          }
         }
       }
 

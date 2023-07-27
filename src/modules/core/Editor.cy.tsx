@@ -249,7 +249,12 @@ describe("Editor Component", () => {
       cy.get(".adv-content").type("{enter}/");
       cy.get('.insert-menu [data-test-id="insert-image"]').click();
       cy.get(".adv-content image-placeholder input").type(`${url}{enter}`);
+      cy.get(".adv-content .image-node .caption span").then((el) => {
+        // Without base css el is not visible, so doing a testing hack 
+        el.get(0).appendChild(document.createTextNode('Caption for text'))
+      })
       cy.get(`.adv-content .image-container img[src="${url}"]`);
+      cy.get(`.adv-content .image-container span`).contains('Caption for text');
     });
 
     it("should insert a youtube embed via placeholder", () => {
@@ -261,19 +266,19 @@ describe("Editor Component", () => {
       cy.get(`.adv-content div[data-youtube-video] iframe`);
     });
 
-    it.only("should insert a bulletted list", () => {
+    it("should insert a bulletted list", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/bullet{enter}").type("List Item 1");
       cy.get(".adv-content ul li").contains("List Item 1");
     });
 
-    it.only("should insert a numbered list", () => {
+    it("should insert a numbered list", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/number{enter}").type("List Item 1");
       cy.get(".adv-content ol li").contains("List Item 1");
     });
 
-    it.only("should insert a callout", () => {
+    it("should insert a callout", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/call{enter}").type("List Item 1");
       cy.get(".adv-content .callout span").contains("List Item 1");

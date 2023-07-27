@@ -1,12 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Node,
-  mergeAttributes,
-  nodePasteRule,
-  Command,
-  InputRule,
-  ChainedCommands,
-} from "@tiptap/core";
+import { Node, mergeAttributes, nodePasteRule, InputRule } from "@tiptap/core";
 import {
   NodeViewContent,
   NodeViewWrapper,
@@ -20,9 +13,9 @@ type ResizerCallback = (arg0: {
 }) => void;
 
 declare module "@tiptap/core" {
-  interface Commands {
+  interface Commands<ReturnType> {
     imageNode: {
-      setImage: (options: { src: string }) => ChainedCommands;
+      setImage: (options: { src: string }) => ReturnType;
     };
   }
 }
@@ -125,6 +118,7 @@ class ImageResizer {
 
 const ImageComponent = ({ node }: { node: NodeSpec }) => {
   const imageRef = useRef<HTMLElement>(null);
+  const captionRef = useRef<HTMLDivElement>(null)
   const [resizer, setResizer] = useState<ImageResizer>();
 
   useEffect(() => {
@@ -146,7 +140,7 @@ const ImageComponent = ({ node }: { node: NodeSpec }) => {
     <NodeViewWrapper>
       <span className="image-node">
         <span ref={imageRef} className="image-container">
-          <img src={(node.attrs?.src as string) || ""} />
+          <img src={(node.attrs?.src as string) || ""} onClick={() => setTimeout(() => captionRef.current?.focus(), 0)} />
           <NodeViewContent className="caption"></NodeViewContent>
           <span
             contentEditable="false"
@@ -215,7 +209,7 @@ const ImageNode = Node.create({
               "span",
               {
                 style:
-                  "display: flex; justify-content: center; height: 20px; font-size: 12px; color: var(--bs-gray-800);",
+                  "display: flex; justify-content: center; height: 20px; font-size: 12px; color: var(--adv-tertiary);",
               },
               0,
             ],
