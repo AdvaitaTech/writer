@@ -1,8 +1,8 @@
-import { StrictMode, useState } from "react";
-import { createRoot } from "react-dom/client";
-import Editor from "modules/core/Editor";
-import "./playground.scss";
-import "modules/core/ui/base.scss";
+'use client';
+import React, { StrictMode, useState } from "react";
+import "./page.scss";
+import "src/modules/core/ui/base.scss";
+import Editor from "src/modules/core/Editor";
 
 const App = () => {
   const [preview, setPreview] = useState(null);
@@ -33,10 +33,10 @@ const App = () => {
   );
 };
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
-
-export {};
+export default function PlaygroundPage() {
+  return (
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+}

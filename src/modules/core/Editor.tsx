@@ -15,9 +15,11 @@ import { BubbleMenu } from "./menus/BubbleMenu";
 interface EditorProps {
   content?: string;
   placeholder?: string;
+  styles?: string;
+  onUpdate: (html: string) => void;
 }
 
-const Editor = ({ content, placeholder }: EditorProps) => {
+const Editor = ({ content, placeholder, styles, onUpdate }: EditorProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
     extensions: [
@@ -40,12 +42,15 @@ const Editor = ({ content, placeholder }: EditorProps) => {
         class: "adv-content",
       },
     },
+    onUpdate: ({ editor }) => {
+      onUpdate(editor.getHTML());
+    },
   });
 
   return (
-    <div ref={containerRef} className="adv-editor">
+    <div ref={containerRef} className={styles || "editor"}>
       {editor && <BubbleMenu editor={editor} containerRef={containerRef} />}
-      <EditorContent editor={editor} className="editor" />
+      <EditorContent editor={editor} />
     </div>
   );
 };
