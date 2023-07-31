@@ -1,8 +1,8 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import Editor from "modules/core/Editor";
+import Editor from "src/modules/core/Editor";
 import "./playground.scss";
-import "modules/core/ui/base.scss";
+import "src/modules/core/ui/base.scss";
 
 const App = () => {
   const [preview, setPreview] = useState(null);

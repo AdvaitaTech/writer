@@ -3,6 +3,7 @@ import vitePreprocessor from 'cypress-vite';
 
 export default defineConfig({
   component: {
+    specPattern: '**/*.spec.{js,jsx,ts,tsx}',
     devServer: {
       framework: "react",
       bundler: "vite",
@@ -10,6 +11,7 @@ export default defineConfig({
   },
 
   e2e: {
+    specPattern: 'cypress/e2e/**/*.spec.{js,jsx,ts,tsx}',
     setupNodeEvents(on, config) {
       on('file:preprocessor', vitePreprocessor())
     },

@@ -3,7 +3,7 @@ import Editor from "./Editor";
 import {
   createNodeSelection,
   createTextSelection,
-} from "modules/test/test-helpers";
+} from "src/modules/test/test-helpers";
 
 const showEditor = (content: string = "") => {
   cy.mount(<Editor content={content || ""} />);
@@ -258,7 +258,8 @@ describe("Editor Component", () => {
     });
 
     it.skip("should paste an image from clipboard as an image node", () => {
-      const svgText = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII'
+      const svgText =
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII";
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}");
       cy.get(".adv-content").then((el) =>
@@ -270,7 +271,6 @@ describe("Editor Component", () => {
       });
       cy.get(`.adv-content .image-container img`);
       cy.get(`.adv-content .image-container span`).contains("Caption for text");
-
     });
 
     it("should insert a youtube embed via placeholder", () => {
