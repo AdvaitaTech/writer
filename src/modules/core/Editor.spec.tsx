@@ -319,4 +319,37 @@ describe("Editor Component", () => {
       );
     });
   });
+
+  describe("Change Nodes", () => {
+    it("should change heading to smaller heading", () => {
+      showEditor("<h1>Hello World<h1>");
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get(".block-menu").should("be.visible");
+      cy.get('.block-menu [data-test-id="set-heading2"]').click();
+      cy.get(".block-menu").should("not.be.visible");
+      cy.get(".adv-content h2").contains("Hello World");
+    });
+
+    it("should change para to blockquote", () => {
+      showEditor("Hello World");
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get(".block-menu").should("be.visible");
+      cy.get('.block-menu [data-test-id="set-quote"]').click();
+      cy.get(".block-menu").should("not.be.visible");
+      cy.get(".adv-content blockquote").contains("Hello World");
+    });
+
+    it("should show the bubble menu for the current block being edited", () => {
+      let firstLocation = null;
+      showEditor("Hello World");
+      cy.get('[data-test-id="change-block"]').then((el) => {
+        firstLocation = el.position();
+      });
+      cy.get('.adv-content').type('{enter}Second node');
+      cy.get('[data-test-id="change-block"]').then((el) => {
+        firstLocation = el.position();
+        expect(el.position()).to.not.eq(firstLocation);
+      });
+    });
+  });
 });
