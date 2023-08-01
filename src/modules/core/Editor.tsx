@@ -11,6 +11,8 @@ import CommandsPlugin from "./nodes/CommandsPlugin";
 import ImagePlaceholderNode from "./nodes/ImagePlaceholderNode";
 import VideoPlaceholderNode from "./nodes/VideoPlaceholderNode";
 import { BubbleMenu } from "./menus/BubbleMenu";
+import { ChangeMenu } from "./menus/ChangeMenu";
+import { ChangeIcon } from "./assets/icons/ChangeIcon";
 
 interface EditorProps {
   content?: string;
@@ -50,6 +52,10 @@ const Editor = ({ content, placeholder, styles, onUpdate }: EditorProps) => {
   return (
     <div ref={containerRef} className={styles || "editor"}>
       {editor && <BubbleMenu editor={editor} containerRef={containerRef} />}
+      {editor && (
+        <ChangeMenu className="change-menu" editor={editor} containerRef={containerRef}>
+        </ChangeMenu>
+      )}
       <EditorContent editor={editor} />
     </div>
   );

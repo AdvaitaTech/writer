@@ -36,7 +36,7 @@
 
   .editor {
     width: 80%;
-    padding: 0 20px;
+    padding: 0 40px;
     background: white;
     min-height: 100%;
     display: flex;
@@ -71,6 +71,40 @@
 
       &.active {
         color: var(--adv-primary);
+      }
+    }
+  }
+
+  .change-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: -35px;
+    gap: 10px;
+
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .block-menu {
+      padding: 0;
+      border: 1px solid black;
+      border-radius: 5px;
+      background: white;
+      box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+        rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+
+      .menu-item {
+        padding: 5px 10px;
+        border-bottom: 1px solid black;
+        cursor: pointer;
+
+        &:last-child {
+          border: 0;
+        }
       }
     }
   }
@@ -268,7 +302,7 @@
   }
 
   code {
-    font-family: 'Space Mono', monospace;
+    font-family: "Space Mono", monospace;
     background: var(--adv-light);
     color: var(--adv-primary);
     padding: 20px;

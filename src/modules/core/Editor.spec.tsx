@@ -6,13 +6,13 @@ import {
 } from "src/modules/test/test-helpers";
 
 const showEditor = (content: string = "") => {
-  cy.mount(<Editor content={content || ""} />);
+  cy.mount(<Editor content={content || ""} onUpdate={() => {}} />);
 };
 
 describe("Editor Component", () => {
   it("renders", () => {
     // see: https://on.cypress.io/mounting-react
-    cy.mount(<Editor content="Hello World" />);
+    cy.mount(<Editor content="Hello World" onUpdate={() => {}} />);
     cy.contains("Hello World");
   });
 
@@ -323,25 +323,28 @@ describe("Editor Component", () => {
   describe("Change Nodes", () => {
     it("should change heading to smaller heading", () => {
       showEditor("<h1>Hello World<h1>");
+      cy.get('.adv-content').focus();
       cy.get('[data-test-id="change-block"]').click();
       cy.get(".block-menu").should("be.visible");
       cy.get('.block-menu [data-test-id="set-heading2"]').click();
-      cy.get(".block-menu").should("not.be.visible");
+      cy.get(".block-menu").should("not.exist");
       cy.get(".adv-content h2").contains("Hello World");
     });
 
     it("should change para to blockquote", () => {
       showEditor("Hello World");
+      cy.get('.adv-content').focus();
       cy.get('[data-test-id="change-block"]').click();
       cy.get(".block-menu").should("be.visible");
       cy.get('.block-menu [data-test-id="set-quote"]').click();
-      cy.get(".block-menu").should("not.be.visible");
+      cy.get(".block-menu").should("not.exist");
       cy.get(".adv-content blockquote").contains("Hello World");
     });
 
     it("should show the bubble menu for the current block being edited", () => {
       let firstLocation = null;
       showEditor("Hello World");
+      cy.get('.adv-content').focus();
       cy.get('[data-test-id="change-block"]').then((el) => {
         firstLocation = el.position();
       });
