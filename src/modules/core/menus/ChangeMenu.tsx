@@ -55,18 +55,10 @@ export class ChangeMenuView {
       !$anchor.parent.type.spec.code &&
       !$anchor.parent.textContent;
 
-    console.log(
-      "check show",
-      view.hasFocus(),
-      empty,
-      isRootDepth,
-      isEmptyTextBlock,
-      this.editor.isEditable
-    );
     if (
       !view.hasFocus() ||
       // !empty ||
-      !isRootDepth ||
+      // !isRootDepth ||
       // !isEmptyTextBlock ||
       !this.editor.isEditable
     ) {
@@ -163,7 +155,6 @@ export class ChangeMenuView {
   update(view: EditorView, oldState?: EditorState) {
     const { state } = view;
     const { doc, selection } = state;
-    const { from, to } = selection;
     const isSame =
       oldState && oldState.doc.eq(doc) && oldState.selection.eq(selection);
 
@@ -191,7 +182,13 @@ export class ChangeMenuView {
         this.tippyOptions?.getReferenceClientRect ||
         (() => {
           const from = selection.$from.posAtIndex(0);
-          return posToDOMRect(view, from, from);
+          const boundaries = posToDOMRect(view, 1, 1);
+          const nodeRect = posToDOMRect(view, from, from);
+          return {
+            ...nodeRect,
+            left: boundaries.left,
+            right: boundaries.right,
+          };
         }),
     });
 
@@ -244,7 +241,6 @@ export const ChangeMenuReact = Extension.create({
     };
   },
   addProseMirrorPlugins() {
-    console.log("elem", this.options.element);
     return [
       ChangeMenuPlugin({
         pluginKey: this.options.pluginKey,
@@ -315,6 +311,15 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
 
   const menus: MenuItemProps = [
     {
+      title: "Paragraph",
+      attrs: {
+        "data-test-id": "set-paragraph",
+      },
+      command: ({ editor }) => {
+        editor.chain().focus().setParagraph().run();
+      },
+    },
+    {
       title: "Heading",
       attrs: {
         "data-test-id": "set-heading1",
@@ -356,11 +361,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-bullet-list",
       },
       command: ({ editor, range }) => {
-        editor
-          .chain()
-          .focus()
-          .toggleBulletList()
-          .run();
+        editor.chain().focus().toggleBulletList().run();
       },
     },
     {
@@ -369,11 +370,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-ordered-list",
       },
       command: ({ editor, range }) => {
-        editor
-          .chain()
-          .focus()
-          .toggleOrderedList()
-          .run();
+        editor.chain().focus().toggleOrderedList().run();
       },
     },
     {

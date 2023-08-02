@@ -321,9 +321,61 @@ describe("Editor Component", () => {
   });
 
   describe("Change Nodes", () => {
+    it("should change heading to paragraph", () => {
+      showEditor("<h1>Hello World<h1>");
+      cy.get(".adv-content").focus();
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get(".block-menu").should("be.visible");
+      cy.get('.block-menu [data-test-id="set-paragraph"]').click();
+      cy.get(".block-menu").should("not.exist");
+      cy.get(".adv-content p").contains("Hello World");
+    });
+
+    it("should change bullets to paragraph and back", () => {
+      let menuPosition = null;
+      showEditor("<ul><li>Hello World<li></ul>");
+      cy.get(".adv-content").focus();
+      cy.get('[data-test-id="change-block"]').then((el) => {
+        menuPosition = el.position();
+      });
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get(".block-menu").should("be.visible");
+      cy.get('.block-menu [data-test-id="set-paragraph"]').click();
+      cy.get(".block-menu").should("not.exist");
+      cy.get('[data-test-id="change-block"]').then((el) => {
+        menuPosition = el.position();
+        expect(el.position()).to.deep.eq(menuPosition);
+      });
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get(".block-menu").should("be.visible");
+      cy.get('.block-menu [data-test-id="set-bullet-list"]').click();
+      cy.get(".adv-content li").contains("Hello World");
+    });
+
+    it("should change list to paragraph and back", () => {
+      let menuPosition = null;
+      showEditor("<ol><li>Hello World<li></ol>");
+      cy.get(".adv-content").focus();
+      cy.get('[data-test-id="change-block"]').then((el) => {
+        menuPosition = el.position();
+      });
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get(".block-menu").should("be.visible");
+      cy.get('.block-menu [data-test-id="set-paragraph"]').click();
+      cy.get(".block-menu").should("not.exist");
+      cy.get('[data-test-id="change-block"]').then((el) => {
+        menuPosition = el.position();
+        expect(el.position()).to.deep.eq(menuPosition);
+      });
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get(".block-menu").should("be.visible");
+      cy.get('.block-menu [data-test-id="set-ordered-list"]').click();
+      cy.get(".adv-content li").contains("Hello World");
+    });
+
     it("should change heading to smaller heading", () => {
       showEditor("<h1>Hello World<h1>");
-      cy.get('.adv-content').focus();
+      cy.get(".adv-content").focus();
       cy.get('[data-test-id="change-block"]').click();
       cy.get(".block-menu").should("be.visible");
       cy.get('.block-menu [data-test-id="set-heading2"]').click();
@@ -333,7 +385,7 @@ describe("Editor Component", () => {
 
     it("should change para to blockquote", () => {
       showEditor("Hello World");
-      cy.get('.adv-content').focus();
+      cy.get(".adv-content").focus();
       cy.get('[data-test-id="change-block"]').click();
       cy.get(".block-menu").should("be.visible");
       cy.get('.block-menu [data-test-id="set-quote"]').click();
@@ -344,11 +396,11 @@ describe("Editor Component", () => {
     it("should show the bubble menu for the current block being edited", () => {
       let firstLocation = null;
       showEditor("Hello World");
-      cy.get('.adv-content').focus();
+      cy.get(".adv-content").focus();
       cy.get('[data-test-id="change-block"]').then((el) => {
         firstLocation = el.position();
       });
-      cy.get('.adv-content').type('{enter}Second node');
+      cy.get(".adv-content").type("{enter}Second node");
       cy.get('[data-test-id="change-block"]').then((el) => {
         firstLocation = el.position();
         expect(el.position()).to.not.eq(firstLocation);
