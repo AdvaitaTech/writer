@@ -49,6 +49,20 @@ export class ChangeMenuView {
   }) => {
     const { selection } = state;
     const { $anchor, empty } = selection;
+    const disabledContents = [
+      "imageNode",
+      "imagePlaceholder",
+      "videoNode",
+      "videoPlaceholder",
+    ];
+    let isDisabled = false;
+    if ($anchor && $anchor.node(1)) {
+      const node = $anchor.node(1);
+      const contents = node.content ? node.content?.toJSON() || [] : [];
+      isDisabled = contents.find((c: { type: string }) =>
+        disabledContents.includes(c.type)
+      );
+    }
     const isRootDepth = $anchor.depth === 1;
     const isEmptyTextBlock =
       $anchor.parent.isTextblock &&
@@ -57,6 +71,7 @@ export class ChangeMenuView {
 
     if (
       !view.hasFocus() ||
+      isDisabled ||
       // !empty ||
       // !isRootDepth ||
       // !isEmptyTextBlock ||
@@ -315,8 +330,13 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
       attrs: {
         "data-test-id": "set-paragraph",
       },
-      command: ({ editor }) => {
-        editor.chain().focus().setParagraph().run();
+      command: ({ editor, range }) => {
+        editor
+          .chain()
+          .focus()
+          .clearNodes()
+          .toggleNode("paragraph", "paragraph", {})
+          .run();
       },
     },
     {
@@ -324,7 +344,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
       attrs: {
         "data-test-id": "set-heading1",
       },
-      command: ({ editor }) => {
+      command: ({ editor, range }) => {
         editor.chain().focus().setNode("heading", { level: 1 }).run();
       },
     },
@@ -352,7 +372,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-quote",
       },
       command: ({ editor, range }) => {
-        editor.chain().focus().setBlockquote().run();
+        editor.chain().focus().clearNodes().setBlockquote().run();
       },
     },
     {
@@ -361,7 +381,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-bullet-list",
       },
       command: ({ editor, range }) => {
-        editor.chain().focus().toggleBulletList().run();
+        editor.chain().focus().clearNodes().toggleBulletList().run();
       },
     },
     {
@@ -411,7 +431,14 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
                 {...attrs}
                 onClick={() => {
                   setShowList(false);
-                  command({ editor: props.editor, range: { from: 0, to: 0 } });
+                  const { selection } = props.editor.state;
+                  const $anchor = selection.$anchor;
+                  const range = {
+                    from: $anchor.posAtIndex(0, 1),
+                    to: $anchor.posAtIndex(1, 1),
+                  };
+                  console.log("range 1 is", range);
+                  command({ editor: props.editor, range });
                 }}
               >
                 {title}

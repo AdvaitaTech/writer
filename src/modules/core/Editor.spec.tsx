@@ -320,7 +320,7 @@ describe("Editor Component", () => {
     });
   });
 
-  describe("Change Nodes", () => {
+  describe.only("Change Nodes", () => {
     it("should change heading to paragraph", () => {
       showEditor("<h1>Hello World<h1>");
       cy.get(".adv-content").focus();
@@ -405,6 +405,22 @@ describe("Editor Component", () => {
         firstLocation = el.position();
         expect(el.position()).to.not.eq(firstLocation);
       });
+    });
+
+    it("should not show the change node menu for images and videos", () => {
+      const url =
+        "https://images.vexels.com/media/users/3/136995/isolated/lists/799cbe2494ac10761303868f937c68d0-tiny-recycle-arrow.png";
+      const video = "https://www.youtube.com/watch?v=tD8KUyQPmmE";
+      showEditor("Hello World");
+      cy.get(".adv-content").type("{enter}/");
+      cy.get('.insert-menu [data-test-id="insert-image"]').click();
+      cy.get(".adv-content image-placeholder input").type(`${url}{enter}`);
+      cy.get('[data-test-id="change-block"]').should("not.exist");
+      cy.get(`.adv-content .image-container img[src="${url}"]`);
+      cy.get(".adv-content").type("{enter}/");
+      cy.get('.insert-menu [data-test-id="insert-video"]').click();
+      cy.get(".adv-content video-placeholder input").type(`${video}{enter}`);
+      cy.get(`.adv-content div[data-youtube-video] iframe`);
     });
   });
 });

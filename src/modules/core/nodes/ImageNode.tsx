@@ -159,7 +159,6 @@ const ImageNode = Node.create({
   content: "inline*",
   inline: true,
   draggable: true,
-  isolating: true,
   addAttributes() {
     return {
       src: {
