@@ -320,7 +320,7 @@ describe("Editor Component", () => {
     });
   });
 
-  describe.only("Change Nodes", () => {
+  describe("Change Nodes", () => {
     it("should change heading to paragraph", () => {
       showEditor("<h1>Hello World<h1>");
       cy.get(".adv-content").focus();

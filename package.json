@@ -27,6 +27,7 @@
     "@tiptap/suggestion": "^2.0.4",
     "@vitejs/plugin-react": "^4.0.3",
     "clsx": "^2.0.0",
+    "next": "^13.4.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tippy.js": "^6.3.7",
