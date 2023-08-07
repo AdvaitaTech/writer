@@ -220,18 +220,18 @@ export class ChangeMenuView {
 
   destroy() {
     return;
-    if (this.tippy?.popper.firstChild) {
-      (this.tippy.popper.firstChild as HTMLElement).removeEventListener(
-        "blur",
-        this.tippyBlurHandler
-      );
-    }
-    this.tippy?.destroy();
-    this.element.removeEventListener("mousedown", this.mousedownHandler, {
-      capture: true,
-    });
-    this.editor.off("focus", this.focusHandler);
-    this.editor.off("blur", this.blurHandler);
+    // if (this.tippy?.popper.firstChild) {
+    //   (this.tippy.popper.firstChild as HTMLElement).removeEventListener(
+    //     "blur",
+    //     this.tippyBlurHandler
+    //   );
+    // }
+    // this.tippy?.destroy();
+    // this.element.removeEventListener("mousedown", this.mousedownHandler, {
+    //   capture: true,
+    // });
+    // this.editor.off("focus", this.focusHandler);
+    // this.editor.off("blur", this.blurHandler);
   }
 }
 

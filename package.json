@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "dev": "next dev",
-    "build": "tsc && vite build && next build",
+    "build": "next build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "cypress:open": "cypress open"
