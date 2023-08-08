@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { StrictMode, useState } from "react";
 import "./page.scss";
 import "src/modules/core/ui/base.scss";
@@ -20,7 +20,9 @@ const App = () => {
       </button>
       {preview ? (
         <div className="editor">
-          <div dangerouslySetInnerHTML={{ __html: html }}></div>
+          <div className="adv-content">
+            <div dangerouslySetInnerHTML={{ __html: html }}></div>
+          </div>
         </div>
       ) : (
         <Editor
