@@ -407,6 +407,38 @@ describe("Editor Component", () => {
       });
     });
 
+    it("should change quote to heading removing blockquote", () => {
+      showEditor("<blockquote>Hello World</blockquote>");
+      cy.get(".adv-content").focus();
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get('.block-menu [data-test-id="set-heading1"]').click();
+      cy.get(".adv-content h1").contains("Hello World");
+    });
+
+    it("should change quote to numbered list removing blockquote", () => {
+      showEditor("<blockquote>Hello World</blockquote>");
+      cy.get(".adv-content").focus();
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get('.block-menu [data-test-id="set-ordered-list"]').click();
+      cy.get(".adv-content ol li").contains("Hello World");
+    });
+
+    it("should change quote to code block", () => {
+      showEditor("<blockquote>Hello World</blockquote>");
+      cy.get(".adv-content").focus();
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get('.block-menu [data-test-id="set-code"]').click();
+      cy.get(".adv-content pre code").contains("Hello World");
+    });
+
+    it("should change quote to callout", () => {
+      showEditor("<blockquote>Hello World</blockquote>");
+      cy.get(".adv-content").focus();
+      cy.get('[data-test-id="change-block"]').click();
+      cy.get('.block-menu [data-test-id="set-callout"]').click();
+      cy.get(".adv-content .callout").contains("Hello World");
+    });
+
     it("should not show the change node menu for images and videos", () => {
       const url =
         "https://images.vexels.com/media/users/3/136995/isolated/lists/799cbe2494ac10761303868f937c68d0-tiny-recycle-arrow.png";

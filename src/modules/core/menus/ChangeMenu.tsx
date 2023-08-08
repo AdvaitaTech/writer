@@ -345,7 +345,12 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-heading1",
       },
       command: ({ editor, range }) => {
-        editor.chain().focus().setNode("heading", { level: 1 }).run();
+        editor
+          .chain()
+          .focus()
+          .clearNodes()
+          .setNode("heading", { level: 1 })
+          .run();
       },
     },
     {
@@ -354,7 +359,12 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-heading2",
       },
       command: ({ editor }) => {
-        editor.chain().focus().setNode("heading", { level: 2 }).run();
+        editor
+          .chain()
+          .focus()
+          .clearNodes()
+          .setNode("heading", { level: 2 })
+          .run();
       },
     },
     {
@@ -363,7 +373,12 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-heading3",
       },
       command: ({ editor }) => {
-        editor.chain().focus().setNode("heading", { level: 3 }).run();
+        editor
+          .chain()
+          .focus()
+          .clearNodes()
+          .setNode("heading", { level: 3 })
+          .run();
       },
     },
     {
@@ -390,7 +405,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-ordered-list",
       },
       command: ({ editor, range }) => {
-        editor.chain().focus().toggleOrderedList().run();
+        editor.chain().focus().clearNodes().toggleOrderedList().run();
       },
     },
     {
@@ -399,7 +414,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-code",
       },
       command: ({ editor, range }) => {
-        editor.chain().focus().setCodeBlock().run();
+        editor.chain().focus().clearNodes().setCodeBlock().run();
       },
     },
     {
@@ -408,7 +423,13 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
         "data-test-id": "set-callout",
       },
       command: ({ editor, range }) => {
-        editor.chain().focus().setCallout().run();
+        editor
+          .chain()
+          .focus()
+          .clearNodes()
+          .setParagraph()
+          .toggleNode("paragraph", "callout", {})
+          .run();
       },
     },
   ];
