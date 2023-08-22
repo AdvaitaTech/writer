@@ -294,6 +294,12 @@ describe("Editor Component", () => {
       cy.get(".adv-content ol li").contains("List Item 1");
     });
 
+    it("should insert a divider", () => {
+      showEditor("Hello World");
+      cy.get(".adv-content").type("{enter}/divi{enter}");
+      cy.get(".adv-content hr");
+    });
+
     it("should insert a callout", () => {
       showEditor("Hello World");
       cy.get(".adv-content").type("{enter}/call{enter}").type("List Item 1");

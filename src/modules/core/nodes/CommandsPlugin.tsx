@@ -225,6 +225,24 @@ const CommandsPlugin = Extension.create({
                 },
               },
               {
+                title: "Divider",
+                subtitle: 'Visually divide sections',
+                attrs: {
+                  "data-test-id": "insert-divider",
+                },
+                command: ({ editor, range }) => {
+                  const selection = editor.view.state.selection;
+                  const from = selection.$from.posAtIndex(0);
+                  const to = selection.$from.posAtIndex(1);
+                  editor
+                    .chain()
+                    .focus()
+                    .deleteRange({ from, to })
+                    .setHorizontalRule()
+                    .run();
+                },
+              },
+              {
                 title: "Code Block",
                 subtitle: 'Display a code snippet',
                 attrs: {
