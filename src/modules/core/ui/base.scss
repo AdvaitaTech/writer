@@ -99,11 +99,25 @@
 
       .menu-item {
         padding: 5px 10px;
-        border-bottom: 1px solid black;
         cursor: pointer;
 
-        &:last-child {
-          border: 0;
+        .menu-wrapper {
+          padding: 5px 10px;
+          text-align: left;
+          border-radius: 5px;
+
+          &:hover {
+            background: var(--adv-light);
+          }
+
+          .menu-title {
+            font-size: 15px;
+          }
+
+          .menu-subtitle {
+            font-size: 12px;
+            color: var(--adv-secondary);
+          }
         }
       }
     }
@@ -131,22 +145,41 @@
     flex-direction: column;
     display: flex;
     border: 1px solid black;
+    padding: 5px 0;
     // visibility: hidden;
     background: white;
-    width: 200px;
+    width: 300px;
     border-radius: 5px;
     box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
       rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
 
     button {
       font-family: var(--adv-font);
-      font-size: 15px;
       border: none;
       background: transparent;
       cursor: pointer;
 
       &.active {
         color: var(--adv-primary);
+      }
+
+      .menu-wrapper {
+        padding: 5px 10px;
+        text-align: left;
+        border-radius: 5px;
+
+        &:hover {
+          background: var(--adv-light);
+        }
+
+        .menu-title {
+          font-size: 15px;
+        }
+
+        .menu-subtitle {
+          font-size: 12px;
+          color: var(--adv-secondary);
+        }
       }
     }
   }

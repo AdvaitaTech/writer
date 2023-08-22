@@ -285,7 +285,7 @@ export interface ChangeMenuProps {
 
 export type MenuItemProps = {
   title: string;
-  subtitle?: string;
+  subtitle: string;
   attrs: any;
   command: ({
     editor,
@@ -327,6 +327,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
   const menus: MenuItemProps = [
     {
       title: "Paragraph",
+      subtitle: "Convert to a paragraph block",
       attrs: {
         "data-test-id": "set-paragraph",
       },
@@ -341,6 +342,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Heading",
+      subtitle: "Convert to a large section heading block",
       attrs: {
         "data-test-id": "set-heading1",
       },
@@ -355,6 +357,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Subheading",
+      subtitle: "Convert to a medium section heading block",
       attrs: {
         "data-test-id": "set-heading2",
       },
@@ -369,6 +372,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Small Subheading",
+      subtitle: "Convert to a small section heading block",
       attrs: {
         "data-test-id": "set-heading3",
       },
@@ -383,6 +387,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Quote",
+      subtitle: "Convert to a quoted block",
       attrs: {
         "data-test-id": "set-quote",
       },
@@ -392,6 +397,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Bullet List",
+      subtitle: "Convert to a simple bullet point",
       attrs: {
         "data-test-id": "set-bullet-list",
       },
@@ -401,6 +407,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Numbered List",
+      subtitle: "Convert to a numbered list point",
       attrs: {
         "data-test-id": "set-ordered-list",
       },
@@ -410,6 +417,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Code Block",
+      subtitle: "Wrap your text in a code snippet",
       attrs: {
         "data-test-id": "set-code",
       },
@@ -419,6 +427,7 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
     },
     {
       title: "Callout",
+      subtitle: "Wrap your text in a visually striking block",
       attrs: {
         "data-test-id": "set-callout",
       },
@@ -462,7 +471,10 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
                   command({ editor: props.editor, range });
                 }}
               >
-                {title}
+                <div className="menu-wrapper">
+                  <div className="menu-title">{title}</div>
+                  <div className="menu-subtitle">{subtitle}</div>
+                </div>
               </div>
             );
           })}

@@ -80,7 +80,14 @@ class CommandsView extends Component<SuggestionProps> {
               key={index}
               onClick={() => this.selectItem(index)}
             >
-              {item.element || item.title}
+              <div className="menu-wrapper">
+                <div className="menu-title">
+                  {item.element || item.title}
+                </div>
+                <div className="menu-subtitle">
+                  {item.subtitle}
+                </div>
+              </div>
             </button>
           );
         })}
@@ -91,6 +98,7 @@ class CommandsView extends Component<SuggestionProps> {
 
 interface CommandProps {
   title: string;
+  subtitle: string;
   attrs: any;
   command: (a: { editor: Editor; range: Range; props: any }) => void;
 }
@@ -110,6 +118,7 @@ const CommandsPlugin = Extension.create({
             [
               {
                 title: "Heading",
+                subtitle: 'Large section heading',
                 attrs: {
                   "data-test-id": "insert-heading1",
                 },
@@ -127,6 +136,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Subheading",
+                subtitle: 'Medium section heading',
                 attrs: {
                   "data-test-id": "insert-heading2",
                 },
@@ -144,6 +154,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Small Subheading",
+                subtitle: 'Small section heading',
                 attrs: {
                   "data-test-id": "insert-heading3",
                 },
@@ -161,6 +172,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Quote",
+                subtitle: 'Display a quote',
                 attrs: {
                   "data-test-id": "insert-quote",
                 },
@@ -178,6 +190,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Bullet List",
+                subtitle: 'Create a list with bullet points',
                 attrs: {
                   "data-test-id": "insert-bullet-list",
                 },
@@ -195,6 +208,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Numbered List",
+                subtitle: 'Create a list with numbering',
                 attrs: {
                   "data-test-id": "insert-ordered-list",
                 },
@@ -212,6 +226,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Code Block",
+                subtitle: 'Display a code snippet',
                 attrs: {
                   "data-test-id": "insert-code",
                 },
@@ -229,6 +244,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Callout",
+                subtitle: 'Make your text stand out',
                 attrs: {
                   "data-test-id": "insert-callout",
                 },
@@ -246,6 +262,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Image",
+                subtitle: 'Embed an image',
                 attrs: {
                   "data-test-id": "insert-image",
                 },
@@ -263,6 +280,7 @@ const CommandsPlugin = Extension.create({
               },
               {
                 title: "Video",
+                subtitle: 'Embed a youtube video',
                 attrs: {
                   "data-test-id": "insert-video",
                 },
