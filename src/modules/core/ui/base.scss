@@ -40,6 +40,7 @@
     background: white;
     min-height: 100%;
     display: flex;
+    position: relative;
   }
 
   .bubble-menu {
@@ -121,6 +122,57 @@
         }
       }
     }
+  }
+
+  .search-box {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: black;
+    border-radius: 10px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    z-index: 20;
+
+    input {
+      background: var(--adv-primary);
+      border: none;
+      border-radius: 3px;
+      outline: none;
+      margin-bottom: 10px;
+      padding: 5px;
+      color: white;
+
+      &:last-of-type {
+        margin: 0;
+      }
+    }
+
+    .replace-bar {
+      display: flex;
+      margin-top: 5px;
+      align-items: center;
+      justify-content: center;
+
+      input {
+        flex: 1;
+      }
+
+      button {
+        margin-top: 7px;
+        background: transparent;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .search-result {
+    background: var(--adv-tertiary);
+    padding: 2px;
   }
 
   .insert-link-box {

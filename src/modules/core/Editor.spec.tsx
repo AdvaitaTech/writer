@@ -6,13 +6,13 @@ import {
 } from "src/modules/test/test-helpers";
 
 const showEditor = (content: string = "") => {
-  cy.mount(<Editor content={content || ""} onUpdate={() => {}} />);
+  cy.mount(<Editor content={content || ""} setEditorRef={() => {}} />);
 };
 
 describe("Editor Component", () => {
   it("renders", () => {
     // see: https://on.cypress.io/mounting-react
-    cy.mount(<Editor content="Hello World" onUpdate={() => {}} />);
+    cy.mount(<Editor content="Hello World" setEditorRef={() => {}} />);
     cy.contains("Hello World");
   });
 
@@ -349,7 +349,7 @@ describe("Editor Component", () => {
       cy.get('.block-menu [data-test-id="set-paragraph"]').click();
       cy.get(".block-menu").should("not.exist");
       cy.get('[data-test-id="change-block"]').then((el) => {
-        menuPosition = el.position();
+        menuPosition = el.get()
         expect(el.position()).to.deep.eq(menuPosition);
       });
       cy.get('[data-test-id="change-block"]').click();
@@ -459,6 +459,34 @@ describe("Editor Component", () => {
       cy.get('.insert-menu [data-test-id="insert-video"]').click();
       cy.get(".adv-content video-placeholder input").type(`${video}{enter}`);
       cy.get(`.adv-content div[data-youtube-video] iframe`);
+    });
+  });
+
+  describe("Search", () => {
+    it("should search and go through each search result", () => {
+      let bubblePosition: unknown;
+      showEditor("This is very distressing is what it is");
+      cy.get("[data-test-id='search-input']").type("i").type("s{enter}");
+      cy.get(".adv-content span.search-result").contains("is");
+      cy.get(".bubble-menu").then(
+        (el) => (bubblePosition = el[0].getBoundingClientRect())
+      );
+      cy.get(".adv-content").type("{ctrl},{ctrl},");
+      cy.wait(400);
+      cy.get(".bubble-menu").then((el) =>
+        expect(el[0].getBoundingClientRect()).to.not.deep.eq(bubblePosition)
+      );
+      cy.get(".adv-content").type("{ctrl},{ctrl},{ctrl},");
+      cy.wait(400);
+      // it should cycle back to first after all results are looped
+      cy.get(".bubble-menu").then((el) =>
+        expect(el[0].getBoundingClientRect()).to.deep.eq(bubblePosition)
+      );
+      cy.get(".adv-content").type("{ctrl}.");
+      cy.wait(400);
+      cy.get(".bubble-menu").then((el) =>
+        expect(el[0].getBoundingClientRect()).to.not.deep.eq(bubblePosition)
+      );
     });
   });
 });

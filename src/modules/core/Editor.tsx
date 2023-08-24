@@ -13,6 +13,7 @@ import VideoPlaceholderNode from "./nodes/VideoPlaceholderNode";
 import { BubbleMenu } from "./menus/BubbleMenu";
 import { ChangeMenu } from "./menus/ChangeMenu";
 import { ChangeIcon } from "./assets/icons/ChangeIcon";
+import { SearchBoxComponent, SearchPlugin } from "./nodes/SearchPlugin";
 
 export class AdvaitaEditorRef {
   private editor: EditorReact | null = null;
@@ -53,6 +54,7 @@ const Editor = ({
       CommandsPlugin,
       ImagePlaceholderNode,
       VideoPlaceholderNode,
+      SearchPlugin
     ],
     content,
     editorProps: {
@@ -75,6 +77,13 @@ const Editor = ({
           editor={editor}
           containerRef={containerRef}
         ></ChangeMenu>
+      )}
+      {editor && (
+        <SearchBoxComponent
+          className="change-menu"
+          editor={editor}
+          containerRef={containerRef}
+        ></SearchBoxComponent>
       )}
       <EditorContent editor={editor} />
     </div>
