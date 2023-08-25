@@ -488,5 +488,21 @@ describe("Editor Component", () => {
         expect(el[0].getBoundingClientRect()).to.not.deep.eq(bubblePosition)
       );
     });
+
+
+    it("should search and replace one by one", () => {
+      let bubblePosition: unknown;
+      showEditor("This is very sad is what it is");
+      cy.get("[data-test-id='search-input']").type("i").type("s{enter}");
+      cy.get(".adv-content span.search-result").contains("is");
+      cy.get("[data-test-id='replace-input']").type("snt{enter}");
+      cy.get('.adv-content').contains('Thsnt is very sad is what it is');
+      cy.get('.adv-content').type("{ctrl};");
+      cy.get('.adv-content').contains('Thsnt snt very sad is what it is');
+      cy.get('.adv-content').type("{ctrl};");
+      cy.get('.adv-content').contains('Thsnt snt very sad snt what it is');
+      cy.get('.adv-content').type("{ctrl};");
+      cy.get('.adv-content').contains('Thsnt snt very sad snt what it snt');
+    });
   });
 });

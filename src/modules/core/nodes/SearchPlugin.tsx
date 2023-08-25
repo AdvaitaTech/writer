@@ -23,7 +23,7 @@ declare module "@tiptap/core" {
       /**
        * @description Replace first instance of search result with given replace term.
        */
-      replace: () => ReturnType;
+      replaceNext: () => ReturnType;
       /**
        * @description Replace all instances of search result with given replace term.
        */
@@ -248,9 +248,9 @@ export const SearchPlugin = Extension.create<SearchOptions>({
 
           return false;
         },
-      replace:
+      replaceNext:
         () =>
-        ({ state, dispatch }) => {
+        ({ state, dispatch, view,  tr,...others }) => {
           const { replaceTerm, results } = this.storage;
 
           replace(replaceTerm, results, { state, dispatch });
@@ -314,6 +314,14 @@ export const SearchPlugin = Extension.create<SearchOptions>({
         this.editor.chain().focus().goToPreviousResult();
         return true;
       },
+      "Control-;": () => {
+        this.editor.commands.replaceNext();
+        return true;
+      },
+      "Control-'": () => {
+        this.editor.chain().focus().replaceAll();
+        return true;
+      },
     };
   },
 
@@ -328,10 +336,14 @@ export const SearchPlugin = Extension.create<SearchOptions>({
           init() {
             return DecorationSet.empty;
           },
-          apply({ doc, docChanged }) {
+          apply(tr, value, oldState, newState) {
+            const {doc, docChanged} = tr;
             const { searchTerm, disableRegex, caseSensitive } =
               extensionThis.storage;
             const { searchResultClass } = extensionThis.options;
+            if (docChanged) {
+              value.map(tr.mapping, tr.doc);
+            }
 
             if (docChanged || searchTerm) {
               const { decorationsToReturn, results } = processSearches(
@@ -378,7 +390,7 @@ export const SearchBoxComponent = ({
   return (
     <div
       className={clsx("search-box", {
-        active: true,
+        active: searchTerm !== undefined,
       })}
     >
       <input
@@ -394,7 +406,17 @@ export const SearchBoxComponent = ({
         }}
       />
       <div className="replace-bar">
-        <input type="text" placeholder="Replace..." />
+        <input
+          data-test-id="replace-input"
+          type="text"
+          placeholder="Replace..."
+          onChange={(e) => {
+            editor.commands.setReplaceTerm(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") editor.commands.replaceNext();
+          }}
+        />
         <button>
           <ReplaceOnceIcon />
         </button>

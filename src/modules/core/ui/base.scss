@@ -135,6 +135,11 @@
     flex-direction: column;
     width: 250px;
     z-index: 20;
+    visibility: hidden;
+
+    &.active {
+      visibility: visible;
+    }
 
     input {
       background: var(--adv-primary);
