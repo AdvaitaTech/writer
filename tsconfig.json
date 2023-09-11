@@ -38,7 +38,8 @@
   "include": [
     "src",
     "cypress",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "dist/types/**/*.ts"
   ],
   "references": [
     {
