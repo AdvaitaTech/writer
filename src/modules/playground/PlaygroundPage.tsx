@@ -25,7 +25,7 @@ const App = () => {
       ) : (
         <Editor
           content={html}
-          onUpdate={(html) => setHtml(html)}
+          setEditorRef={() => {}}
           styles="editor"
         />
       )}
