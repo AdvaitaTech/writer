@@ -1,18 +1,18 @@
 import React from "react";
-import Editor from "./Editor";
+import { Writer } from "./Editor";
 import {
   createNodeSelection,
   createTextSelection,
 } from "src/modules/test/test-helpers";
 
 const showEditor = (content: string = "") => {
-  cy.mount(<Editor content={content || ""} setEditorRef={() => {}} />);
+  cy.mount(<Writer content={content || ""} setEditorRef={() => {}} />);
 };
 
 describe("Editor Component", () => {
   it("renders", () => {
     // see: https://on.cypress.io/mounting-react
-    cy.mount(<Editor content="Hello World" setEditorRef={() => {}} />);
+    cy.mount(<Writer content="Hello World" setEditorRef={() => {}} />);
     cy.contains("Hello World");
   });
 
@@ -349,7 +349,7 @@ describe("Editor Component", () => {
       cy.get('.block-menu [data-test-id="set-paragraph"]').click();
       cy.get(".block-menu").should("not.exist");
       cy.get('[data-test-id="change-block"]').then((el) => {
-        menuPosition = el.get()
+        menuPosition = el.get();
         expect(el.position()).to.deep.eq(menuPosition);
       });
       cy.get('[data-test-id="change-block"]').click();
@@ -489,20 +489,19 @@ describe("Editor Component", () => {
       );
     });
 
-
     it("should search and replace one by one", () => {
       let bubblePosition: unknown;
       showEditor("This is very sad is what it is");
       cy.get("[data-test-id='search-input']").type("i").type("s{enter}");
       cy.get(".adv-content span.search-result").contains("is");
       cy.get("[data-test-id='replace-input']").type("snt{enter}");
-      cy.get('.adv-content').contains('Thsnt is very sad is what it is');
-      cy.get('.adv-content').type("{ctrl};");
-      cy.get('.adv-content').contains('Thsnt snt very sad is what it is');
-      cy.get('.adv-content').type("{ctrl};");
-      cy.get('.adv-content').contains('Thsnt snt very sad snt what it is');
-      cy.get('.adv-content').type("{ctrl};");
-      cy.get('.adv-content').contains('Thsnt snt very sad snt what it snt');
+      cy.get(".adv-content").contains("Thsnt is very sad is what it is");
+      cy.get(".adv-content").type("{ctrl};");
+      cy.get(".adv-content").contains("Thsnt snt very sad is what it is");
+      cy.get(".adv-content").type("{ctrl};");
+      cy.get(".adv-content").contains("Thsnt snt very sad snt what it is");
+      cy.get(".adv-content").type("{ctrl};");
+      cy.get(".adv-content").contains("Thsnt snt very sad snt what it snt");
     });
   });
 });

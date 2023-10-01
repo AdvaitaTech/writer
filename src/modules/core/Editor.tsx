@@ -15,7 +15,7 @@ import { ChangeMenu } from "./menus/ChangeMenu";
 import { ChangeIcon } from "./assets/icons/ChangeIcon";
 import { SearchBoxComponent, SearchPlugin } from "./nodes/SearchPlugin";
 
-export class AdvaitaEditorRef {
+export class AdvaitaWriterRef {
   private editor: EditorReact | null = null;
   constructor(editor: EditorReact) {
     this.editor = editor;
@@ -30,10 +30,10 @@ interface EditorProps {
   content?: string;
   placeholder?: string;
   styles?: string;
-  setEditorRef: (ref: AdvaitaEditorRef) => void;
+  setEditorRef: (ref: AdvaitaWriterRef) => void;
 }
 
-const Editor = ({
+export const Writer = ({
   content,
   placeholder,
   styles,
@@ -64,7 +64,7 @@ const Editor = ({
     },
     onCreate: ({ editor }) => {
       console.log("create", editor);
-      setEditorRef(new AdvaitaEditorRef(editor as EditorReact));
+      setEditorRef(new AdvaitaWriterRef(editor as EditorReact));
     },
   });
 
@@ -90,4 +90,3 @@ const Editor = ({
   );
 };
 
-export default Editor;

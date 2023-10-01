@@ -1,6 +1,6 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import Editor from "src/modules/core/Editor";
+import { Writer } from "src/modules/core/Editor";
 import "./playground.scss";
 import "src/modules/core/ui/base.scss";
 
@@ -23,11 +23,7 @@ const App = () => {
           <div dangerouslySetInnerHTML={{ __html: html }}></div>
         </div>
       ) : (
-        <Editor
-          content={html}
-          setEditorRef={() => {}}
-          styles="editor"
-        />
+        <Writer content={html} setEditorRef={() => {}} styles="editor" />
       )}
     </div>
   );
