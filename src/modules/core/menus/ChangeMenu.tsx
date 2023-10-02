@@ -132,7 +132,8 @@ export class ChangeMenuView {
       return;
     }
 
-    // this.hide();
+    this.tippy?.hide();
+    this.hide();
   };
 
   tippyBlurHandler = (event: FocusEvent) => {
@@ -154,7 +155,7 @@ export class ChangeMenuView {
       interactive: true,
       trigger: "manual",
       placement: "right-start",
-      // hideOnClick: "toggle",
+      hideOnClick: "toggle",
       ...this.tippyOptions,
     });
 
@@ -187,7 +188,7 @@ export class ChangeMenuView {
     });
 
     if (!shouldShow) {
-      // this.hide();
+      this.hide();
 
       return;
     }
@@ -219,19 +220,18 @@ export class ChangeMenuView {
   }
 
   destroy() {
-    return;
-    // if (this.tippy?.popper.firstChild) {
-    //   (this.tippy.popper.firstChild as HTMLElement).removeEventListener(
-    //     "blur",
-    //     this.tippyBlurHandler
-    //   );
-    // }
-    // this.tippy?.destroy();
-    // this.element.removeEventListener("mousedown", this.mousedownHandler, {
-    //   capture: true,
-    // });
-    // this.editor.off("focus", this.focusHandler);
-    // this.editor.off("blur", this.blurHandler);
+    if (this.tippy?.popper.firstChild) {
+      (this.tippy.popper.firstChild as HTMLElement).removeEventListener(
+        "blur",
+        this.tippyBlurHandler
+      );
+    }
+    this.tippy?.destroy();
+    this.element.removeEventListener("mousedown", this.mousedownHandler, {
+      capture: true,
+    });
+    this.editor.off("focus", this.focusHandler);
+    this.editor.off("blur", this.blurHandler);
   }
 }
 
@@ -449,8 +449,17 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
       className={props.className}
       data-test-id="change-block"
       style={{ visibility: "hidden" }}
+      tabIndex={0}
+      onBlur={() => {
+        setShowList(false);
+      }}
     >
-      <ChangeIcon onClick={() => setShowList(!showList)} />
+      <ChangeIcon
+        onClick={() => {
+          setShowList(!showList);
+          element?.focus();
+        }}
+      />
       {showList ? (
         <div className="block-menu">
           {menus.map(({ attrs, title, subtitle, command }) => {
@@ -467,7 +476,6 @@ export const ChangeMenu = (props: PropsWithChildren<ChangeMenuProps>) => {
                     from: $anchor.posAtIndex(0, 1),
                     to: $anchor.posAtIndex(1, 1),
                   };
-                  console.log("range 1 is", range);
                   command({ editor: props.editor, range });
                 }}
               >
