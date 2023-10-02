@@ -30,7 +30,12 @@ export default defineConfig({
           sourceMap: false,
           declaration: true,
           outDir: "dist",
-          include: ["src/modules/core/**", "src/modules/ui/**"]
+          include: ["src/modules/core/**", "src/modules/ui/**"],
+          compilerOptions: {
+            noEmit: false,
+            declaration: true,
+            emitDeclarationOnly: true
+          }
         }),
       ],
     },
