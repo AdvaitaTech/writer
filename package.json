@@ -1,6 +1,6 @@
 {
   "name": "@advaita-tech/writer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An opionated open source text editor that intends to provide the best experience for long form writing on the internet",
   "type": "module",
   "repository": "git@github.com:AdvaitaTech/writer.git",
@@ -15,7 +15,7 @@
   },
   "main": "./dist/main.cjs",
   "module": "./dist/main.js",
-  "typings": "./dist/main.d.ts",
+  "types": "./dist/main.d.ts",
   "files": [
     "dist"
   ],
@@ -49,6 +49,7 @@
     "vite-tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.38.0",
     "@rollup/plugin-typescript": "^11.1.4",
     "@types/cypress": "^1.1.3",
     "@types/mocha": "^10.0.1",
@@ -64,6 +65,10 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "rollup-plugin-typescript-paths": "^1.4.0",
     "sass": "^1.63.6",
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.2",
+    "vite-plugin-dts": "^3.6.0"
+  },
+  "peerDependencies": {
+    "@microsoft/api-extractor": "^7.38.0"
   }
 }

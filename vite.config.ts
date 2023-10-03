@@ -1,13 +1,14 @@
 import { defineConfig } from "vite";
 import path from "path";
 import typescript from "@rollup/plugin-typescript";
+import dts from 'vite-plugin-dts';
 import {typescriptPaths} from "rollup-plugin-typescript-paths";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [react(), tsconfigPaths(), dts({rollupTypes: true, copyDtsFiles: true})],
   server: {
     port: 3001,
   },
@@ -28,14 +29,8 @@ export default defineConfig({
         // }),
         typescript({
           sourceMap: false,
-          declaration: true,
           outDir: "dist",
           include: ["src/modules/core/**", "src/modules/ui/**"],
-          compilerOptions: {
-            noEmit: false,
-            declaration: true,
-            emitDeclarationOnly: true
-          }
         }),
       ],
     },
