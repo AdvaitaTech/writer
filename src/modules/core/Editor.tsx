@@ -30,6 +30,7 @@ interface EditorProps {
   content?: string;
   placeholder?: string;
   styles?: string;
+  onUpdate?: () => void;
   setEditorRef: (ref: AdvaitaWriterRef) => void;
 }
 
@@ -37,6 +38,7 @@ export const Writer = ({
   content,
   placeholder,
   styles,
+  onUpdate,
   setEditorRef,
 }: EditorProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,7 +56,7 @@ export const Writer = ({
       CommandsPlugin,
       ImagePlaceholderNode,
       VideoPlaceholderNode,
-      SearchPlugin
+      SearchPlugin,
     ],
     content,
     editorProps: {
@@ -65,6 +67,11 @@ export const Writer = ({
     onCreate: ({ editor }) => {
       console.log("create", editor);
       setEditorRef(new AdvaitaWriterRef(editor as EditorReact));
+    },
+    onUpdate: ({}) => {
+      if (onUpdate) {
+        onUpdate();
+      }
     },
   });
 
@@ -89,4 +96,3 @@ export const Writer = ({
     </div>
   );
 };
-
