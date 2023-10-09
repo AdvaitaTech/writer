@@ -19,9 +19,9 @@ describe("Editor Component", () => {
   describe("Nodes", () => {
     it("should set paragraph content", () => {
       showEditor("Hello World");
-      cy.get(".editor p").clear();
-      cy.get(".editor").type("This is a paragraph");
-      cy.get(".editor").should("have.text", "This is a paragraph");
+      cy.get(".adv-content p").clear();
+      cy.get(".adv-content").type("This is a paragraph");
+      cy.get(".adv-content").should("have.text", "This is a paragraph");
     });
 
     it("should show a placeholder", () => {
@@ -92,6 +92,7 @@ describe("Editor Component", () => {
   describe("Marks", () => {
     it("should show the floating menu for marks", () => {
       showEditor("Hello World");
+      cy.wait(100);
       cy.get(".bubble-menu").should("not.exist");
       cy.get(".adv-content").then((field) => {
         createTextSelection(field.get(0), 6, 9);
@@ -103,9 +104,9 @@ describe("Editor Component", () => {
       showEditor(
         "<p>Hello World</p><ul><li>List Item</li></ul><h2>Heading</h2><pre><code>Code block</code></pre>"
       );
+      cy.wait(100);
       cy.get(".adv-content").then((field) => {
         createTextSelection(field.get(0), 6, 9, 0, 0);
-        return field;
       });
       cy.get(".bubble-menu");
       cy.get(".adv-content ul li").then((field) => {
@@ -124,9 +125,10 @@ describe("Editor Component", () => {
 
     it("should toggle bold mark", () => {
       showEditor("Hello World");
-      cy.get(".adv-content").then((field) =>
+      cy.wait(100);
+      cy.get(".adv-content").then((field) => {
         createTextSelection(field.get(0), 6, 9)
-      );
+      });
       cy.get(".bubble-menu");
       cy.get('[data-test-id="mark-bold"]')
         .click()
@@ -139,6 +141,7 @@ describe("Editor Component", () => {
 
     it("should toggle italic mark", () => {
       showEditor("Hello World");
+      cy.wait(100);
       cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
@@ -153,6 +156,7 @@ describe("Editor Component", () => {
 
     it("should toggle underline mark", () => {
       showEditor("Hello World");
+      cy.wait(100);
       cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
@@ -167,6 +171,7 @@ describe("Editor Component", () => {
 
     it("should toggle strike mark", () => {
       showEditor("Hello World");
+      cy.wait(100);
       cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
@@ -181,6 +186,7 @@ describe("Editor Component", () => {
 
     it("should insert a link", () => {
       showEditor("Hello World");
+      cy.wait(100);
       cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
@@ -199,6 +205,7 @@ describe("Editor Component", () => {
 
     it("should change highlight bubble icons if selection changes", () => {
       showEditor("Hello World");
+      cy.wait(100);
       cy.get(".adv-content").then((field) =>
         createTextSelection(field.get(0), 6, 9)
       );
@@ -276,6 +283,7 @@ describe("Editor Component", () => {
     it("should insert a youtube embed via placeholder", () => {
       const url = "https://www.youtube.com/watch?v=tD8KUyQPmmE";
       showEditor("Hello World");
+      cy.wait(100);
       cy.get(".adv-content").type("{enter}/");
       cy.get('.insert-menu [data-test-id="insert-video"]').click();
       cy.get(".adv-content video-placeholder input").type(`${url}{enter}`);
@@ -328,7 +336,7 @@ describe("Editor Component", () => {
 
   describe("Change Nodes", () => {
     it("should change heading to paragraph", () => {
-      showEditor("<h1>Hello World<h1>");
+      showEditor("<h3>Hello World");
       cy.get(".adv-content").focus();
       cy.get('[data-test-id="change-block"]').click();
       cy.get(".block-menu").should("be.visible");
@@ -338,8 +346,8 @@ describe("Editor Component", () => {
     });
 
     it("should change bullets to paragraph and back", () => {
-      let menuPosition = null;
-      showEditor("<ul><li>Hello World<li></ul>");
+      let menuPosition:any = null;
+      showEditor("<ul><li>Hello World");
       cy.get(".adv-content").focus();
       cy.get('[data-test-id="change-block"]').then((el) => {
         menuPosition = el.position();
@@ -349,8 +357,7 @@ describe("Editor Component", () => {
       cy.get('.block-menu [data-test-id="set-paragraph"]').click();
       cy.get(".block-menu").should("not.exist");
       cy.get('[data-test-id="change-block"]').then((el) => {
-        menuPosition = el.get();
-        expect(el.position()).to.deep.eq(menuPosition);
+        expect(el.position()).to.deep.eq(menuPosition || {});
       });
       cy.get('[data-test-id="change-block"]').click();
       cy.get(".block-menu").should("be.visible");
@@ -359,8 +366,8 @@ describe("Editor Component", () => {
     });
 
     it("should change list to paragraph and back", () => {
-      let menuPosition = null;
-      showEditor("<ol><li>Hello World<li></ol>");
+      let menuPosition:any = null;
+      showEditor("<ol><li>Hello World");
       cy.get(".adv-content").focus();
       cy.get('[data-test-id="change-block"]').then((el) => {
         menuPosition = el.position();
@@ -370,7 +377,6 @@ describe("Editor Component", () => {
       cy.get('.block-menu [data-test-id="set-paragraph"]').click();
       cy.get(".block-menu").should("not.exist");
       cy.get('[data-test-id="change-block"]').then((el) => {
-        menuPosition = el.position();
         expect(el.position()).to.deep.eq(menuPosition);
       });
       cy.get('[data-test-id="change-block"]').click();
@@ -380,7 +386,7 @@ describe("Editor Component", () => {
     });
 
     it("should change heading to smaller heading", () => {
-      showEditor("<h1>Hello World<h1>");
+      showEditor("<h1>Hello World");
       cy.get(".adv-content").focus();
       cy.get('[data-test-id="change-block"]').click();
       cy.get(".block-menu").should("be.visible");
@@ -466,7 +472,8 @@ describe("Editor Component", () => {
     it("should search and go through each search result", () => {
       let bubblePosition: unknown;
       showEditor("This is very distressing is what it is");
-      cy.get("[data-test-id='search-input']").type("i").type("s{enter}");
+      cy.get("[data-test-id='search-input']").type("i").type("s").type("{enter}");
+      cy.wait(100);
       cy.get(".adv-content span.search-result").contains("is");
       cy.get(".bubble-menu").then(
         (el) => (bubblePosition = el[0].getBoundingClientRect())
@@ -492,7 +499,7 @@ describe("Editor Component", () => {
     it("should search and replace one by one", () => {
       let bubblePosition: unknown;
       showEditor("This is very sad is what it is");
-      cy.get("[data-test-id='search-input']").type("i").type("s{enter}");
+      cy.get("[data-test-id='search-input']").clear().type("i").type("s").type("{enter}");
       cy.get(".adv-content span.search-result").contains("is");
       cy.get("[data-test-id='replace-input']").type("snt{enter}");
       cy.get(".adv-content").contains("Thsnt is very sad is what it is");
