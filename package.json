@@ -1,6 +1,6 @@
 {
   "name": "@advaita-tech/writer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An opionated open source text editor that intends to provide the best experience for long form writing on the internet",
   "type": "module",
   "repository": "git@github.com:AdvaitaTech/writer.git",
