@@ -34,7 +34,7 @@ interface EditorProps {
   content?: string;
   placeholder?: string;
   styles?: string;
-  autoFocus?: boolean;
+  autofocus?: FocusPosition;
   onUpdate?: () => void;
   setEditorRef: (ref: AdvaitaWriterRef) => void;
 }
@@ -45,7 +45,7 @@ export const Writer = ({
   styles,
   onUpdate,
   setEditorRef,
-  autoFocus = false
+  autofocus = false
 }: EditorProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
@@ -64,7 +64,7 @@ export const Writer = ({
       VideoPlaceholderNode,
       SearchPlugin,
     ],
-    autofocus: 'end',
+    autofocus,
     content,
     editorProps: {
       attributes: {
