@@ -47,7 +47,6 @@ class ImageResizer {
 
   onMouseMove(event: MouseEvent) {
     if (this.dragStarted) {
-      console.log("move", event.clientX, event.clientY, this.lastPointer);
       const pointer = this._getPointer(event);
       const delta = {
         x: pointer.x - this.lastPointer.x,
@@ -191,7 +190,6 @@ const ImageNode = Node.create({
     };
   },
   renderHTML: ({ HTMLAttributes, node }) => {
-    console.log("render", HTMLAttributes);
     const mainImg = [
       "span",
       {
@@ -243,7 +241,6 @@ const ImageNode = Node.create({
         find: imgRegex,
         type: this.type,
         getAttributes: (matches) => {
-          console.log("matches", matches);
           const src = matches[2] || "";
           return { src };
         },
@@ -258,7 +255,6 @@ const ImageNode = Node.create({
         find: imgRegex,
         type: this.type,
         getAttributes: (matches) => {
-          console.log("matches", matches);
           const src = matches[2] || "";
           return { src };
         },

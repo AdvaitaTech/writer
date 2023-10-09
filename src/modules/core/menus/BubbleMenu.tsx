@@ -7,6 +7,7 @@ import { UnderlineIcon } from "../assets/icons/UnderlineIcon";
 import { StrikeIcon } from "../assets/icons/StrikeIcon";
 import { LinkIcon } from "../assets/icons/LinkIcon";
 import { TextSelection } from "@tiptap/pm/state";
+import { CancelIcon } from "../assets/icons/CancelIcon";
 
 export interface BubbleMenuProps {
   editor: Editor;
@@ -104,6 +105,12 @@ const SelectionMenu = ({
               }
             }}
           />
+          <span
+            data-test-id="cancel-link"
+            onClick={() => editor.chain().focus().unsetLink().run()}
+          >
+            <CancelIcon />
+          </span>
         </div>
       );
   }

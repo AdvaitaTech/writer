@@ -318,8 +318,7 @@ const CommandsPlugin = Extension.create({
           )
             .filter((item) => {
               return item.title.toLowerCase().startsWith(query.toLowerCase());
-            })
-            .slice(0, 10);
+            });
         },
         startOfLine: true,
         allow: ({ state, range, editor }) => {

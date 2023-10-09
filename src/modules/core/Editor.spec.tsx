@@ -203,6 +203,29 @@ describe("Editor Component", () => {
       cy.get('.bubble-menu [data-test-id="mark-link"]');
     });
 
+    it("should remove a link", () => {
+      showEditor("Hello World");
+      cy.wait(100);
+      cy.get(".adv-content").then((field) =>
+        createTextSelection(field.get(0), 6, 9)
+      );
+      cy.get(".bubble-menu");
+      cy.get('[data-test-id="mark-link"]').click();
+      cy.get(".bubble-menu .insert-link-box");
+      cy.get('.bubble-menu [data-test-id="insert-link-value"]')
+        .type("http://google.com")
+        .type("{enter}");
+      cy.get(".adv-content p").get('a[href="http://google.com"]');
+      cy.get(".adv-content p").then((field) =>
+        createNodeSelection(field.get(0))
+      );
+      cy.get('[data-test-id="mark-link"]').click();
+      cy.get('[data-test-id="cancel-link"]').click();
+      cy.get(".adv-content p")
+        .get('a[href="http://google.com"]')
+        .should("not.exist");
+    });
+
     it("should change highlight bubble icons if selection changes", () => {
       showEditor("Hello World");
       cy.wait(100);
