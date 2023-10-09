@@ -1,5 +1,5 @@
 import React from "react";
-import { Writer } from "./Editor";
+import { AdvaitaWriterRef, Writer } from "./Editor";
 import {
   createNodeSelection,
   createTextSelection,
@@ -14,6 +14,24 @@ describe("Editor Component", () => {
     // see: https://on.cypress.io/mounting-react
     cy.mount(<Writer content="Hello World" setEditorRef={() => {}} />);
     cy.contains("Hello World");
+  });
+
+  it("focuses editor", () => {
+    cy.mount(<Writer content="First test" setEditorRef={() => {}} autoFocus />);
+    cy.get(".adv-content").should("have.focus");
+    let test: AdvaitaWriterRef;
+    cy.mount(
+      <Writer
+        content="Second Test"
+        setEditorRef={(ref) => {
+          test = ref;
+        }}
+        autoFocus
+      />
+    );
+    // @ts-ignore
+    test?.focus();
+    cy.get(".adv-content").should("have.focus");
   });
 
   describe("Nodes", () => {

@@ -1,7 +1,7 @@
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor, Editor as EditorReact } from "@tiptap/react";
+import { EditorContent, useEditor, Editor as EditorReact, FocusPosition } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { CalloutNode } from "./nodes/CalloutNode";
 import ImageNode from "./nodes/ImageNode";
@@ -24,12 +24,17 @@ export class AdvaitaWriterRef {
   exportHTML() {
     return this.editor!.getHTML();
   }
+
+  focus(position?: FocusPosition) {
+    return this.editor!.chain().focus(position).run();
+  }
 }
 
 interface EditorProps {
   content?: string;
   placeholder?: string;
   styles?: string;
+  autoFocus?: boolean;
   onUpdate?: () => void;
   setEditorRef: (ref: AdvaitaWriterRef) => void;
 }
@@ -40,6 +45,7 @@ export const Writer = ({
   styles,
   onUpdate,
   setEditorRef,
+  autoFocus = false
 }: EditorProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
@@ -58,6 +64,7 @@ export const Writer = ({
       VideoPlaceholderNode,
       SearchPlugin,
     ],
+    autofocus: 'end',
     content,
     editorProps: {
       attributes: {
@@ -65,7 +72,6 @@ export const Writer = ({
       },
     },
     onCreate: ({ editor }) => {
-      console.log("create", editor);
       setEditorRef(new AdvaitaWriterRef(editor as EditorReact));
     },
     onUpdate: ({}) => {
@@ -92,7 +98,7 @@ export const Writer = ({
           containerRef={containerRef}
         ></SearchBoxComponent>
       )}
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} autoFocus={autoFocus} />
     </div>
   );
 };
